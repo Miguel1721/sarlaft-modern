@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:10pt;color:#1a1a1a;line-height:1.5}
+.page{padding:2cm 2.5cm}
+.header{border-bottom:3px solid #1F4E79;padding-bottom:8px;margin-bottom:20px;display:flex;justify-content:space-between}
+.header-title{font-size:9pt;color:#555;font-weight:bold}
+.footer{border-top:1px solid #2E75B6;margin-top:30px;padding-top:6px;font-size:8pt;color:#888;display:flex;justify-content:space-between}
+h1{color:#1F4E79;font-size:16pt;font-weight:700;text-align:center;margin:16px 0 6px;text-transform:uppercase}
+h2{color:#2E75B6;font-size:11pt;font-weight:700;margin:16px 0 8px;border-left:4px solid #2E75B6;padding-left:8px;text-transform:uppercase}
+h3{color:#1F4E79;font-size:10pt;font-weight:700;margin:10px 0 5px}
+p{margin-bottom:8px;text-align:justify;font-size:10pt}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9pt}
+th{background:#1F4E79;color:#fff;border:1px solid #999;padding:7px;text-align:center}
+td{border:1px solid #CCC;padding:6px 8px;vertical-align:top}
+.bg-blue{background:#D6E4F0}
+ul,ol{margin:6px 0 10px 20px}
+li{margin-bottom:4px;font-size:9.5pt}
+.section-box{border:1px solid #2E75B6;border-radius:4px;padding:10px 14px;margin:10px 0}
+.alert{background:#FFF2CC;border-left:4px solid #2E75B6;padding:8px 12px;margin:10px 0;font-size:9pt}
+.page-break{page-break-after:always;height:1px}
+.step-num{background:#1F4E79;color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;font-size:9pt;margin-right:6px}
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th, td { border: 1px solid black !important; padding: 8px !important; text-align: left; }
+th { background-color: #1F4E79; color: white; }
+  @media print { table { page-break-inside: avoid; width: 100%; border-collapse: collapse; } tr { page-break-inside: avoid; page-break-after: auto; } thead { display: table-header-group; } h2, h3 { page-break-after: avoid; } }
+</style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="header-title">PROCEDIMIENTO DEBIDA DILIGENCIA | {{ razon_social }}</div>
+  <div class="header-title">v1.0 | {{ fecha_implementacion }}</div>
+</div>
+
+<h1>Procedimiento de Debida Diligencia</h1>
+<p style="text-align:center;color:#2E75B6;font-weight:bold;font-size:11pt;margin-bottom:4px">SARLAFT — Conocimiento del Cliente y Gestión de Riesgo LA/FT/FP</p>
+<p style="text-align:center;font-size:8.5pt;color:#666;margin-bottom:20px">{{ razon_social }} — NIT {{ nit }} | Res. 2328/2025 y Res. 4607/2026 Supertransporte</p>
+
+<h2>1. Objetivo y Alcance</h2>
+<p>El presente procedimiento establece el paso a paso que debe seguir el Oficial de Cumplimiento de <strong>{{ razon_social }}</strong> para realizar la Debida Diligencia (DD) en la vinculación de contrapartes (clientes, proveedores, empleados), en cumplimiento de la <strong>Resolución 2328 de 2025</strong> de la Superintendencia de Transporte.</p>
+<p>Este procedimiento aplica a <strong>toda contraparte</strong> que solicite los servicios de la entidad, independientemente del monto o la frecuencia de la operación.</p>
+
+<h2>2. Tipos de Debida Diligencia</h2>
+<table>
+  <tr><th style="width:25%">Tipo</th><th style="width:25%">Aplica cuando</th><th>Acciones requeridas</th></tr>
+  <tr><td><strong>DD Estándar</strong></td><td>Riesgo BAJO o MEDIO</td><td>Formulario KYC completo, verificación de identidad, consulta en listas restrictivas.</td></tr>
+  <tr class="bg-blue"><td><strong>DD Simplificada</strong></td><td>Entidades del Estado o de bajo riesgo comprobado</td><td>Formulario básico y consulta en listas. No requiere visita presencial.</td></tr>
+  <tr><td><strong>DD Intensificada</strong></td><td>Riesgo ALTO, PEPs, zonas de alta conflictividad, operaciones inusuales</td><td>KYC completo + visita presencial o videollamada + aprobación explícita del OC + monitoreo semestral.</td></tr>
+</table>
+
+<h2>3. Umbrales y Señales de Alerta</h2>
+<p>Los siguientes umbrales activan la revisión ampliada por el Oficial de Cumplimiento:</p>
+<table>
+  <tr><th>Señal de alerta</th><th>Umbral</th><th>Acción requerida</th></tr>
+  <tr><td>Pago en efectivo</td><td>Cualquier monto</td><td>Registrar origen de fondos en formulario KYC. Si supera $3.000.000 COP, solicitar soporte documental.</td></tr>
+  <tr class="bg-blue"><td>Fraccionamiento de pagos</td><td>2 o más pagos dentro de 30 días que sumen &gt;$5M</td><td>DD Intensificada + posible ROS.</td></tr>
+  <tr><td>Coincidencia en lista restrictiva</td><td>Cualquier coincidencia positiva</td><td>Suspensión inmediata del servicio. ROS obligatorio a la UIAF en 24 horas.</td></tr>
+  <tr class="bg-blue"><td>PEP activo o reciente</td><td>Cargo público en últimos 2 años</td><td>DD Intensificada obligatoria. Aprobación por escrito del OC.</td></tr>
+  <tr><td>Solicitante diferente al propietario del vehículo</td><td>Cualquier caso</td><td>Verificación RUNT + identificar relación y justificación documentada.</td></tr>
+  <tr class="bg-blue"><td>Documentación inconsistente o alterada</td><td>Cualquier caso</td><td>Rechazar la vinculación. ROS si hay sospecha fundada.</td></tr>
+  <tr><td>Zonas de alto riesgo GAFI</td><td>Residencia o actividad en país de la lista GAFI</td><td>DD Intensificada + verificación adicional en listas internacionales.</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<h2>4. Paso a Paso del Procedimiento de Vinculación</h2>
+<div class="section-box">
+<p style="margin-bottom:10px"><strong>Paso 1 — Solicitud de documentos:</strong> Antes del inicio del servicio, solicitar al cliente los documentos de identidad válidos (CC, CE, Pasaporte). Para personas jurídicas: Certificado de Existencia y Representación Legal no mayor a 30 días, RUT y cédula del representante legal.</p>
+<p style="margin-bottom:10px"><strong>Paso 2 — Diligenciamiento del formulario KYC:</strong> El cliente debe completar y firmar el Formulario de Vinculación KYC correspondiente (Persona Natural o Jurídica). El OC debe verificar que todos los campos estén completos y coherentes con los documentos presentados.</p>
+<p style="margin-bottom:10px"><strong>Paso 3 — Verificación de identidad:</strong> Cotejar los datos del formulario contra el documento de identidad físico. Verificar la vigencia de la cédula en la Registraduría Nacional.</p>
+<h4>Paso 4 — Verificación en Listas Restrictivas y Vinculantes</h4>
+<p>El Oficial de Cumplimiento debe verificar a toda contraparte en las siguientes listas antes de iniciar la relación comercial:</p>
+<table>
+  <thead>
+    <tr><th>Lista</th><th>Tipo</th><th>Administrada por</th><th>Efecto ante coincidencia</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Lista OFAC (SDN)</td><td>Vinculante</td><td>Oficina de Control de Activos Extranjeros — EE.UU.</td><td>Bloqueo inmediato. Prohibido operar.</td></tr>
+    <tr><td>Lista ONU (Res. 1267/1988/1989)</td><td>Vinculante</td><td>Consejo de Seguridad ONU</td><td>Bloqueo inmediato. Prohibido operar.</td></tr>
+    <tr><td>Lista Cancillería Colombia</td><td>Vinculante</td><td>Ministerio de Relaciones Exteriores</td><td>Bloqueo inmediato. Prohibido operar.</td></tr>
+    <tr><td>Lista Clinton (Narcotráfico)</td><td>Vinculante</td><td>Gobierno de EE.UU.</td><td>Bloqueo inmediato. Prohibido operar.</td></tr>
+    <tr><td>Listas internas UIAF</td><td>Restrictiva</td><td>UIAF — Colombia</td><td>DD Intensificada obligatoria. Escalar al OC.</td></tr>
+    <tr><td>RUNT — Vehículos hurtados</td><td>Restrictiva</td><td>Ministerio de Transporte — Colombia</td><td>Rechazar el servicio. Reportar a autoridades.</td></tr>
+  </tbody>
+</table>
+<p style="margin-bottom:10px"><strong>Registro obligatorio:</strong> El sistema debe registrar automáticamente fecha, hora, usuario, lista consultada y resultado para cada verificación realizada.</p>
+</div>
+
+<h2>5. Fuentes de Consulta Obligatorias</h2>
+<table>
+  <tr><th style="width:30%">Fuente</th><th style="width:30%">URL de consulta</th><th>Frecuencia</th></tr>
+  <tr><td>OFAC — Lista Clinton (SDN)</td><td>sanctionssearch.ofac.treas.gov</td><td>Cada vinculación</td></tr>
+  <tr class="bg-blue"><td>ONU — Consejo de Seguridad</td><td>scsanctions.un.org</td><td>Cada vinculación</td></tr>
+  <tr><td>Unión Europea (Sanctions Map)</td><td>sanctionsmap.eu</td><td>Cada vinculación</td></tr>
+  <tr class="bg-blue"><td>Cancillería de Colombia</td><td>cancilleria.gov.co</td><td>Cada vinculación</td></tr>
+  <tr><td>Policía Nacional — Antecedentes</td><td>antecedentes.policia.gov.co</td><td>Cada vinculación</td></tr>
+  <tr class="bg-blue"><td>Procuraduría General (SIRI)</td><td>siri.procuraduria.gov.co</td><td>Cada vinculación</td></tr>
+  <tr><td>Contraloría — Responsables Fiscales</td><td>boletin.contraloria.gov.co</td><td>Cada vinculación</td></tr>
+  <tr class="bg-blue"><td>DIAN — Proveedores Ficticios</td><td>muisca.dian.gov.co</td><td>Cada vinculación</td></tr>
+  <tr><td>Registraduría — Vigencia CC</td><td>registraduria.gov.co</td><td>Cada vinculación</td></tr>
+  <tr class="bg-blue"><td>RUNT — Vehículos y conductor</td><td>runt.com.co</td><td>En servicios de revisión</td></tr>
+</table>
+
+<div class="section-box">
+<p style="margin-bottom:10px"><strong>Paso 5 — Clasificación del riesgo:</strong> Con base en los resultados de las consultas y la información del formulario KYC, el OC asigna el nivel de riesgo (ALTO, MEDIO, BAJO) y documenta la justificación.</p>
+<p style="margin-bottom:10px"><strong>Paso 6 — Decisión de vinculación:</strong> El OC registra en el formulario KYC la decisión: Vincular / Rechazar / Monitoreo especial. En caso de rechazo, se documenta el motivo y se archiva el expediente.</p>
+<p style="margin-bottom:10px"><strong>Paso 7 — Monitoreo continuo:</strong> Las contrapartes clasificadas como ALTO riesgo deben ser revisadas semestralmente. Las de MEDIO riesgo, anualmente.</p>
+<p><strong>Paso 8 — Reporte a la UIAF:</strong> Si en cualquier etapa se detecta una operación sospechosa, el OC debe elaborar el Reporte de Operación Sospechosa (ROS) y transmitirlo a través de SIREL dentro de los plazos establecidos por la Ley 1121 de 2006.</p>
+</div>
+
+<h2>6. Archivo y Conservación de Documentos</h2>
+<p>Todos los formularios KYC, resultados de consultas en listas y decisiones del OC deben conservarse <strong>mínimo 5 años</strong> contados desde la terminación de la relación comercial, conforme al Artículo 10 de la Resolución 2328 de 2025.</p>
+
+<div class="footer">
+  <span>Confidencial — Uso Interno {{ razon_social }}</span>
+  <span>Res. 2328/2025 Supertransporte</span>
+</div>
+</div>
+</body>
+</html>

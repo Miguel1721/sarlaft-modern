@@ -1,0 +1,53 @@
+
+services:
+  frontend:
+    build: 
+      context: ./frontend
+    container_name: sarlaft-modern-frontend
+    restart: always
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sarlaft-frontend.rule=Host(`sarlaf.agentesia.cloud`)"
+      - "traefik.http.routers.sarlaft-frontend.entrypoints=websecure"
+      - "traefik.http.routers.sarlaft-frontend.tls.certresolver=myresolver"
+      - "traefik.http.services.sarlaft-frontend.loadbalancer.server.port=3000"
+
+  backend:
+    build: 
+      context: ./backend
+    container_name: sarlaft-modern-backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://igs_admin:igs_secure_pass@igs-postgres:5432/igs_db
+    networks:
+      - traefik-net
+      - igs-internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sarlaft-api.rule=Host(`sarlaf.agentesia.cloud`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.sarlaft-api.entrypoints=websecure"
+      - "traefik.http.routers.sarlaft-api.tls.certresolver=myresolver"
+      - "traefik.http.services.sarlaft-api.loadbalancer.server.port=8000"
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/.env:/app/.env
+
+  sarlaft-legacy-db:
+    image: postgres:15-alpine
+    container_name: sarlaft-legacy-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=db
+    networks:
+      - traefik-net
+
+networks:
+  traefik-net:
+    external: true
+    name: frontend_net
+  igs-internal:
+    external: true
+    name: igs-platform_igs-internal

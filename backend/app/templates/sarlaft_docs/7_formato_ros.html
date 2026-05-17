@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @page { size: A4; margin: 2cm; }
+        .page-break { page-break-after: always; }
+        body { font-family: 'Arial', sans-serif; color: #333; line-height: 1.6; }
+        .header { border-bottom: 2px solid #2E75B6; padding-bottom: 10px; margin-bottom: 20px; font-size: 10px; color: #666; }
+        .footer { border-top: 1px solid #2E75B6; padding-top: 10px; margin-top: 20px; font-size: 10px; color: #666; position: fixed; bottom: 0; width: 100%; }
+        h1 { color: #1F4E79; font-size: 24px; font-weight: bold; text-align: center; margin-top: 30px; margin-bottom: 20px; text-transform: uppercase; }
+        h2 { color: #2E75B6; font-size: 18px; font-weight: bold; margin-top: 20px; margin-bottom: 10px; border-left: 5px solid #2E75B6; padding-left: 10px; }
+        h3 { color: #333; font-size: 14px; font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
+        p { margin-bottom: 10px; text-align: justify; font-size: 11px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 10px; }
+        th { background-color: #1F4E79; color: white; border: 1px solid #CCCCCC; padding: 8px; text-align: center; }
+        td { border: 1px solid #CCCCCC; padding: 8px; vertical-align: top; }
+        .bg-light { background-color: #D6E4F0; }
+        .signature-box { border: 1px solid #CCCCCC; padding: 40px 10px 10px 10px; text-align: center; width: 48%; display: inline-block; }
+        .signatures { display: flex; justify-content: space-between; margin-top: 40px; }
+        .content { background: white; padding: 40px; }
+        @media print { table { page-break-inside: avoid; width: 100%; border-collapse: collapse; } tr { page-break-inside: avoid; page-break-after: auto; } thead { display: table-header-group; } h2, h3 { page-break-after: avoid; } }
+    </style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+    <div class="header flex justify-between">
+        <div>FORMATO ROS | {{ razon_social }}</div>
+        <div>v1.0 | {{ fecha_implementacion }}</div>
+    </div>
+    
+    <div class="content">
+        
+    <h1>REPORTE DE OPERACIÓN SOSPECHOSA (ROS)</h1>
+    <p class="text-center text-red-600 font-bold">⚠ CONFIDENCIAL — USO EXCLUSIVO UIAF</p>
+
+    <h2>DATOS DEL REPORTE</h2>
+    <table>
+        <tr><td>No. Reporte</td><td>{{ consecutivo_ros }}</td></tr>
+        <tr class="bg-light"><td>Fecha Reporte</td><td>{{ fecha_reporte }}</td></tr>
+    </table>
+
+    <h2>DATOS DEL SUJETO REPORTADO</h2>
+    <table>
+        <tr><td>Nombre/Razón Social</td><td>{{ nombre_reportado }}</td></tr>
+        <tr class="bg-light"><td>Documento/NIT</td><td>{{ documento_reportado }}</td></tr>
+        <tr><td>Actividad</td><td>{{ actividad_reportado }}</td></tr>
+    </table>
+
+    <h2>DESCRIPCIÓN DE LA OPERACIÓN</h2>
+    <p><strong>Monto:</strong> {{ monto }}</p>
+    <p><strong>Detalle:</strong> {{ descripcion_operacion }}</p>
+    <p><strong>Señales de Alerta:</strong> {{ senales_alerta }}</p>
+
+    <h2>TIPOLOGÍAS DETECTADAS</h2>
+    <div class="grid grid-cols-2 gap-2 text-xs">
+        <div>☐ Fraccionamiento de operaciones (pitufeo)</div>
+        <div>☐ Estructuración de depósitos</div>
+        <div>☐ Uso de testaferros / Prestanombres</div>
+        <div>☐ Inconsistencia en perfil económico</div>
+        <div>☐ Operaciones en zonas de alto riesgo</div>
+        <div>☐ Otras: __________________________</div>
+    </div>
+
+    <h2>EVIDENCIAS ADJUNTAS</h2>
+    <ul class="list-disc list-inside text-xs">
+        <li>Copia de documento de identidad del reportado.</li>
+        <li>Extractos bancarios o recibos de caja.</li>
+        <li>Resultados de búsqueda en listas restrictivas.</li>
+        <li>Otros: __________________________</li>
+    </ul>
+
+    <div class="mt-8 p-4 bg-gray-100 border-l-4 border-red-600">
+        <p class="text-xs font-bold text-red-600">DECLARACIÓN DE CONFIDENCIALIDAD (LEY 1121 DE 2006):</p>
+        <p class="text-[10px] text-gray-700 mt-1">Este documento y la información aquí contenida son de carácter estrictamente CONFIDENCIAL. De conformidad con la Ley 1121 de 2006, queda prohibido revelar a los sujetos reportados o a terceros no autorizados la existencia de este reporte o de las investigaciones en curso. El incumplimiento de este deber de reserva acarrea sanciones penales y administrativas.</p>
+    </div>
+
+    <div class="mt-12 flex justify-end">
+        <div class="w-64 text-center">
+            <div class="border-t border-black pt-2">
+                <p class="font-bold text-sm">{{ nombre_oc }}</p>
+                <p class="text-xs">Oficial de Cumplimiento</p>
+                <p class="text-xs">C.C. {{ oc_cedula }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <p class="text-red-600 italic text-[10px]">Este documento ha sido generado para registro interno previo al cargue en SIREL. Está prohibido revelar su existencia al reportado.</p>
+    </div>
+    
+    </div>
+
+    <div class="footer flex justify-between">
+        <div>Confidencial — Uso Interno</div>
+        <div>Página <span class="pageNumber"></span></div>
+    </div>
+</body>
+</html>

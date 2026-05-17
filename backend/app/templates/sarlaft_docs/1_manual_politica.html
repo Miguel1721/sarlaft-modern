@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;font-size:10.5pt;color:#1a1a1a;line-height:1.65}
+.page{padding:2.2cm 2.8cm 2.5cm}
+.doc-header{border-bottom:3px solid #1F4E79;padding-bottom:10px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:center}
+.doc-header-title{font-size:9pt;color:#555;font-weight:bold}
+.footer{border-top:1px solid #2E75B6;margin-top:36px;padding-top:7px;font-size:8pt;color:#888;display:flex;justify-content:space-between}
+.cover{text-align:center;padding:40px 0 30px}
+.cover h1{font-size:24pt;color:#1F4E79;text-transform:uppercase;letter-spacing:1px;border:none;margin-bottom:8px}
+.cover .subtitle{font-size:14pt;color:#2E75B6;font-weight:bold;margin-bottom:30px}
+.cover table{margin:20px auto;width:70%;font-size:10pt}
+.cover table td{padding:6px 12px;border:1px solid #CCC}
+.cover table td:first-child{background:#1F4E79;color:#fff;font-weight:bold;width:45%}
+h2{color:#1F4E79;font-size:13pt;font-weight:700;margin:24px 0 10px;border-bottom:2px solid #2E75B6;padding-bottom:5px;text-transform:uppercase}
+h3{color:#2E75B6;font-size:11pt;font-weight:700;margin:16px 0 8px;border-left:4px solid #2E75B6;padding-left:8px}
+h4.h4{color:#1a1a1a;font-size:10.5pt;font-weight:700;margin:12px 0 5px;font-style:italic}
+p{margin-bottom:9px;text-align:justify;font-size:10.5pt}
+ul{margin:6px 0 12px 24px}
+li{margin-bottom:5px;font-size:10pt;text-align:justify}
+strong{color:#1a1a1a}
+.page-break{page-break-after:always;height:1px;margin:0}
+table.data{width:100%;border-collapse:collapse;margin:10px 0;font-size:9.5pt}
+table.data th{background:#1F4E79;color:#fff;border:1px solid #999;padding:7px;text-align:center}
+table.data td{border:1px solid #CCC;padding:6px 9px;vertical-align:top}
+table.data .bg-blue{background:#D6E4F0}
+.sign-block{border:1px solid #CCC;padding:55px 10px 12px;text-align:center;width:46%;display:inline-block;vertical-align:top;margin:10px 1.5%}
+.sign-line{border-top:1px solid #444;width:80%;margin:0 auto 7px}
+.alert-box{background:#E8F4FC;border-left:4px solid #2E75B6;padding:10px 14px;margin:12px 0;font-size:9.5pt}
+.warning-box{background:#FFF2CC;border-left:4px solid #C00000;padding:10px 14px;margin:12px 0;font-size:9.5pt;color:#C00000;font-weight:bold}
+.toc{background:#F5F9FC;border:1px solid #BDD7EE;border-radius:4px;padding:14px 20px;margin:20px 0}
+.toc h3{border:none;padding:0;margin-bottom:8px;color:#1F4E79}
+.toc ol{margin:0 0 0 18px}
+.toc li{margin-bottom:4px;font-size:10pt;color:#1F4E79}
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th, td { border: 1px solid black !important; padding: 8px !important; text-align: left; }
+th { background-color: #1F4E79; color: white; }
+  @media print { table { page-break-inside: avoid; width: 100%; border-collapse: collapse; } tr { page-break-inside: avoid; page-break-after: auto; } thead { display: table-header-group; } h2, h3 { page-break-after: avoid; } }
+</style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+<div class="page">
+
+<!-- PORTADA -->
+<div class="cover">
+  <h1>Manual de Políticas y Procedimientos</h1>
+  <div class="subtitle">Sistema de Administración del Riesgo de Lavado de Activos,<br>
+  Financiación del Terrorismo y Financiación de la Proliferación<br>de Armas de Destrucción Masiva</div>
+  <p style="font-size:14pt;font-weight:bold;color:#1F4E79;margin-bottom:6px">SARLAFT 4.0</p>
+  <table>
+    <tr><td>Empresa</td><td><strong>{{ razon_social }}</strong></td></tr>
+    <tr><td>NIT</td><td>{{ nit }}</td></tr>
+    <tr><td>Ciudad / Departamento</td><td>{{ ciudad }}, {{ departamento }}</td></tr>
+    <tr><td>Representante Legal</td><td>{{ representante_legal }}</td></tr>
+    <tr><td>Oficial de Cumplimiento</td><td>{{ nombre_oc_completo | default(nombre_oc) }}</td></tr>
+    <tr><td>Fecha de aprobación</td><td>{{ fecha_implementacion }}</td></tr>
+    <tr><td>Versión</td><td>1.0</td></tr>
+  </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ENCABEZADO DE DOCUMENTO PARA PÁGINAS INTERNAS -->
+<div class="doc-header">
+  <div class="doc-header-title">MANUAL SARLAFT 4.0 | {{ razon_social }}</div>
+  <div class="doc-header-title">v1.0 | {{ fecha_implementacion }}</div>
+</div>
+
+<!-- TABLA DE CONTENIDOS -->
+<div class="toc">
+  <h3>Tabla de Contenidos</h3>
+  <ol>
+    <li>Introducción y Propósito</li>
+    <li>Marco Normativo</li>
+    <li>Objeto y Alcance</li>
+    <li>Definiciones Clave</li>
+    <li>Estructura de Gobierno SARLAFT</li>
+    <li>Etapas de la Gestión del Riesgo</li>
+    <li>Elementos del Sistema de Control</li>
+    <li>Debida Diligencia (DD)</li>
+    <li>Señales de Alerta para CDA</li>
+    <li>Reportes a la UIAF</li>
+    <li>Programa de Capacitación</li>
+    <li>Gestión Documental y Conservación</li>
+    <li>Régimen de Sanciones Internas</li>
+    <li>Vigencia y Actualización</li>
+    <li>Aprobación y Firmas</li>
+  </ol>
+</div>
+
+<div class="page-break"></div>
+
+<p><strong>MANUAL DEL SISTEMA DE ADMINISTRACIÓN DEL RIESGO DE
+LAVADO DE ACTIVOS, FINANCIACIÓN DEL TERRORISMO Y
+FINANCIACIÓN DE LA PROLIFERACIÓN DE ARMAS DE
+DESTRUCCIÓN MASIVA</strong></p>
+<p><strong>SARLAFT</strong></p>
+<p><em>Aprobado por la Junta Directiva / Máximo Órgano Social</em></p>
+<h2><strong>1. INTRODUCCIÓN</strong></h2>
+<p>El presente Manual tiene como finalidad establecer las directrices, estructuras, procedimientos y controles que integran el Sistema de Administración del Riesgo de Lavado de Activos, Financiación del Terrorismo y Financiación de la Proliferación de Armas de Destrucción Masiva (SARLAFT) de {{ razon_social }}, con NIT {{ nit }}, en cumplimiento de lo dispuesto por la Resolución 2328 de 2025 expedida por la Superintendencia de Transporte, modificada por las Resoluciones 16615 de 2025 y 4607 de 2026, orientando el actuar de todos los integrantes de la organización.</p>
+<p>{{ razon_social }} es un Centro de Diagnóstico Automotor (CDA) legalmente constituido, habilitado por la Superintendencia de Transporte, con domicilio en {{ direccion }}, {{ ciudad }}, {{ departamento }}. Los servicios que presta incluyen: {{ servicios }}.</p>
+<p>Este manual es de obligatorio cumplimiento para todos los empleados, directivos, proveedores y demás contrapartes que tengan relación con la empresa, y debe ser revisado y actualizado anualmente o cuando se presenten cambios normativos relevantes.</p>
+<h2><strong>2. MARCO NORMATIVO</strong></h2>
+<p>El presente sistema se fundamenta en las siguientes disposiciones legales y normativas:</p>
+<ul>
+  <li>Ley 190 de 1995: Estatuto Anticorrupción.</li>
+  <li>Ley 1121 de 2006: Prevención, detección, investigación y sanción de la financiación del terrorismo.</li>
+  <li>Ley 1762 de 2015: Ley Anticontrabando.</li>
+  <li>Ley 2195 de 2022: Adopción de medidas en materia de transparencia, prevención y lucha contra la corrupción.</li>
+  <li>Decreto 830 de 2021: Reglamentación relacionada con obligaciones de reporte.</li>
+  <li>Resolución 2328 del 6 de marzo de 2025 (Superintendencia de Transporte): Marco principal del SARLAFT para el sector transporte.</li>
+  <li>Resolución 16615 del 5 de noviembre de 2025 (Superintendencia de Transporte): Modificación de plazos.</li>
+  <li>Resolución 4607 del 9 de abril de 2026 (Superintendencia de Transporte): Régimen de Medidas Simplificadas y ajustes al Oficial de Cumplimiento.</li>
+  <li>Recomendaciones del GAFI (Grupo de Acción Financiera Internacional).</li>
+  <li>Resoluciones del Consejo de Seguridad de la ONU: 1267/1999, 1373/2001, 1988/2011, 1989/2011, 2178/2014.</li>
+</ul>
+<h2><strong>3. OBJETO Y ALCANCE</strong></h2>
+<h3><strong>3.1 Objeto</strong></h3>
+<p>Implementar un sistema integral de prevención y gestión del riesgo de lavado de activos, financiación del terrorismo y financiación de la proliferación de armas de destrucción masiva (LA/FT/FP), que permita a {{ razon_social }} identificar, evaluar, controlar y mitigar dichos riesgos en todas las actividades desarrolladas como Centro de Diagnóstico Automotor.</p>
+<h3><strong>3.2 Alcance</strong></h3>
+<p>El presente SARLAFT aplica a todas las operaciones, procesos, productos y servicios de {{ razon_social }}, así como a todas las contrapartes con las que la empresa establece relaciones comerciales, contractuales o jurídicas, incluyendo:</p>
+<ul>
+  <li>Clientes (propietarios de vehículos, empresas de transporte, personas naturales y jurídicas).</li>
+  <li>Proveedores de bienes y servicios.</li>
+  <li>Empleados y colaboradores.</li>
+  <li>Contratistas y aliados comerciales.</li>
+  <li>Zonas geográficas de operación: {{ zonas_operacion }}.</li>
+</ul>
+<h2><strong>4. DEFINICIONES CLAVE</strong></h2>
+<table>
+  <thead>
+    <tr><th>Término</th><th>Definición Legal (Res. 2328/2025)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Lavado de Activos (LA)</strong></td><td>Proceso de dar apariencia de legalidad a bienes de origen ilícito.</td></tr>
+    <tr><td><strong>Financiación del Terrorismo (FT)</strong></td><td>Suministro de fondos para actividades terroristas.</td></tr>
+    <tr><td><strong>Beneficiario Final</strong></td><td>Persona natural que posee o controla a un cliente o persona jurídica.</td></tr>
+    <tr><td><strong>Operación Sospechosa</strong></td><td>Transacción que no guarda relación con el perfil económico del cliente.</td></tr>
+    <tr><td><strong>Financiación de la Proliferación (FP)</strong></td><td>Suministro de fondos para armas de destrucción masiva.</td></tr>
+    <tr><td><strong>Persona Expuesta Políticamente (PEP)</strong></td><td>Individuo con funciones públicas prominentes en los últimos 2 años.</td></tr>
+    <tr><td><strong>Lista Vinculante</strong></td><td>Prohibición legal de operar (OFAC, ONU, UE, Cancillería Colombia).</td></tr>
+    <tr><td><strong>Lista Restrictiva</strong></td><td>Lista de referencia que genera obligación de mayor diligencia.</td></tr>
+    <tr><td><strong>UIAF / SIREL</strong></td><td>Unidad de Información y Análisis Financiero y su sistema de reportes.</td></tr>
+    <tr><td><strong>Debida Diligencia Intensificada</strong></td><td>Proceso reforzado aplicable a PEPs, zonas de alto riesgo y operaciones inusuales.</td></tr>
+  </tbody>
+</table>
+<h2><strong>5. ESTRUCTURA DE GOBIERNO SARLAFT</strong></h2>
+<h3><strong>5.1 Junta Directiva / Máximo Órgano Social</strong></h3>
+<p>Responsabilidades:</p>
+<ul>
+  <li>Aprobar el SARLAFT y sus actualizaciones.</li>
+  <li>Designar al Oficial de Cumplimiento principal y suplente.</li>
+  <li>Asignar los recursos necesarios para el funcionamiento del sistema.</li>
+  <li>Estudiar los informes periódicos del Oficial de Cumplimiento.</li>
+  <li>Establecer planes de acción frente a los riesgos identificados.</li>
+</ul>
+<h3><strong>5.2 Representante Legal</strong></h3>
+<p>{{ representante_legal }}, identificado(a) con cédula de ciudadanía No. {{ cedula_representante }}, es el Representante Legal de {{ razon_social }}. Sus responsabilidades en el SARLAFT incluyen:</p>
+<ul>
+  <li>Presentar el SARLAFT y sus actualizaciones para aprobación del máximo órgano social.</li>
+  <li>Garantizar la asignación eficiente de recursos técnicos y humanos.</li>
+  <li>Servir de enlace entre el Oficial de Cumplimiento y el máximo órgano social.</li>
+  <li>Velar por el cumplimiento efectivo del SARLAFT en todas las áreas de la empresa.</li>
+</ul>
+<h3><strong>5.3 Oficial de Cumplimiento</strong></h3>
+<p>El Oficial de Cumplimiento de {{ razon_social }} es {{ nombre_oc_completo | default(nombre_oc) }}, identificado(a) con cédula de ciudadanía No. {{ oc_cedula }}, correo electrónico: {{ oc_correo }}.</p>
+<p>Sus funciones principales son:</p>
+<ul>
+  <li>Diseñar, implementar, actualizar y velar por el funcionamiento del SARLAFT.</li>
+  <li>Realizar el proceso de vinculación y conocimiento de contrapartes.</li>
+  <li>Efectuar la verificación en listas vinculantes y restrictivas.</li>
+  <li>Presentar informes periódicos a la alta dirección sobre el funcionamiento del sistema.</li>
+  <li>Gestionar los reportes a la UIAF a través de SIREL.</li>
+  <li>Identificar, evaluar y escalar operaciones inusuales o sospechosas.</li>
+  <li>Coordinar el programa de capacitación anual en LA/FT/FP.</li>
+  <li>Mantener actualizado el registro de contrapartes y las evidencias del sistema.</li>
+</ul>
+<h3><strong>5.4 Todos los Empleados</strong></h3>
+<p>Todos los empleados y colaboradores de la empresa están obligados a:</p>
+<ul>
+  <li>Conocer y cumplir las políticas y procedimientos del SARLAFT.</li>
+  <li>Reportar al Oficial de Cumplimiento cualquier operación inusual o sospechosa.</li>
+  <li>Participar en los programas de capacitación anuales.</li>
+  <li>Abstenerse de revelar información sobre reportes de operaciones sospechosas.</li>
+</ul>
+<h2><strong>6. POLÍTICA DE ADMINISTRACIÓN DE RIESGOS LA/FT/FP</strong></h2>
+<p>{{ razon_social }} se compromete a implementar y mantener un sistema efectivo de prevención, detección y control del riesgo de lavado de activos, financiación del terrorismo y financiación de la proliferación de armas de destrucción masiva (LA/FT/FP), en cumplimiento de la normativa vigente y los estándares internacionales del GAFI.</p>
+<p>La empresa adopta las siguientes declaraciones de política:</p>
+<ul>
+  <li>No establecer ni mantener relaciones comerciales con personas o entidades incluidas en listas vinculantes (OFAC, ONU, UE, Cancillería Colombia) o que presenten señales de alerta no justificadas.</li>
+  <li>Aplicar el principio de Conocimiento del Cliente (KYC) a todas las contrapartes antes de iniciar cualquier relación comercial.</li>
+  <li>Verificar a todas las contrapartes en listas restrictivas nacionales e internacionales con cada vinculación y de forma periódica.</li>
+  <li>Aplicar Debida Diligencia Intensificada a PEPs, clientes de zonas de alto riesgo y contrapartes con operaciones inusuales.</li>
+  <li>Reportar a la UIAF toda operación que califique como sospechosa, sin importar el monto.</li>
+  <li>Capacitar anualmente a todo el personal en materia de LA/FT/FP.</li>
+  <li>Actualizar el SARLAFT cuando se presenten cambios normativos o en el perfil de riesgo de la empresa.</li>
+  <li>Mantener evidencias documentales de todas las acciones realizadas en el marco del SARLAFT.</li>
+</ul>
+<h2><strong>7. ETAPAS DEL SARLAFT</strong></h2>
+<h3><strong>7.1 Identificación del Riesgo</strong></h3>
+<p>La empresa identifica los siguientes factores de riesgo LA/FT/FP:</p>
+<table>
+  <thead>
+    <tr><th>Factor</th><th>Descripción</th><th>Nivel Inherente</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Clientes — Personas naturales</td><td>Clientes que pagan en efectivo montos atípicos o presentan documentos inconsistentes</td><td>Medio</td></tr>
+    <tr><td>Clientes — PEPs</td><td>Personas Expuestas Políticamente o familiares</td><td>Alto</td></tr>
+    <tr><td>Clientes — Personas jurídicas</td><td>Empresas con estructura accionaria opaca o beneficiario final no identificable</td><td>Alto</td></tr>
+    <tr><td>Transacciones en efectivo</td><td>Pagos en efectivo por encima de umbrales establecidos</td><td>Alto</td></tr>
+    <tr><td>Zonas geográficas</td><td>Vehículos de zonas con presencia de grupos armados o economías ilícitas</td><td>Alto</td></tr>
+    <tr><td>Vehículos</td><td>Vehículos con inconsistencias en placa, VIN o documentos de propiedad</td><td>Medio</td></tr>
+    <tr><td>Proveedores</td><td>Proveedores sin trayectoria verificable o precios fuera del mercado</td><td>Medio</td></tr>
+  </tbody>
+</table>
+
+<h3><strong>7.2 Medición y Evaluación del Riesgo</strong></h3>
+<p>La empresa aplica la siguiente escala para calificar cada riesgo identificado:</p>
+<table>
+  <thead>
+    <tr><th>Nivel de Riesgo</th><th>Probabilidad</th><th>Impacto</th><th>Acción requerida</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Bajo</td><td>Poco frecuente</td><td>Leve</td><td>Monitoreo rutinario semestral</td></tr>
+    <tr><td>Medio</td><td>Ocasional</td><td>Moderado</td><td>Control preventivo y seguimiento trimestral</td></tr>
+    <tr><td>Alto</td><td>Frecuente</td><td>Grave</td><td>Control inmediato, reporte al OC y posible ROS</td></tr>
+    <tr><td>Crítico</td><td>Muy frecuente</td><td>Severo</td><td>Bloqueo de contraparte, ROS obligatorio, escalamiento a Junta</td></tr>
+  </tbody>
+</table>
+<h3><strong>7.3 Control del Riesgo</strong></h3>
+<p>Los controles establecidos incluyen:</p>
+<ul>
+  <li>Verificación obligatoria en listas restrictivas y vinculantes para toda nueva contraparte.</li>
+  <li>Validación de identidad con documento original para personas naturales.</li>
+  <li>Confirmación del beneficiario final en personas jurídicas.</li>
+  <li>Límites a operaciones en efectivo según normativa vigente.</li>
+  <li>Registro y justificación documentada de toda operación inusual.</li>
+  <li>Bloqueo automático de contrapartes con coincidencia en listas vinculantes.</li>
+</ul>
+<h3><strong>7.4 Monitoreo del Riesgo</strong></h3>
+<p>El monitoreo se realiza de la siguiente forma:</p>
+<ul>
+  <li>Verificación periódica (mínimo semestral) de contrapartes activas en listas actualizadas.</li>
+  <li>Revisión mensual de transacciones por el Oficial de Cumplimiento.</li>
+  <li>Auditoría interna anual del SARLAFT.</li>
+  <li>Reporte trimestral a la alta dirección sobre el estado del sistema.</li>
+  <li>Actualización inmediata cuando se presenten cambios normativos.</li>
+</ul>
+<h2><strong>8. PROCEDIMIENTO DE CONOCIMIENTO DE LA CONTRAPARTE (KYC)</strong></h2>
+<h3><strong>8.1 Información mínima — Persona Natural</strong></h3>
+<p>Para vincular a una persona natural como cliente o proveedor, se debe recopilar y verificar:</p>
+<ul>
+  <li>Nombre completo.</li>
+  <li>Tipo y número de documento de identidad (cédula, pasaporte, cédula extranjera).</li>
+  <li>Fecha y lugar de nacimiento.</li>
+  <li>Nacionalidad.</li>
+  <li>Dirección de residencia y teléfono de contacto.</li>
+  <li>Correo electrónico.</li>
+  <li>Actividad económica u ocupación.</li>
+  <li>Origen declarado de los fondos para el pago del servicio.</li>
+  <li>Declaración de si es o no Persona Expuesta Políticamente (PEP).</li>
+  <li>Número de placa(s) del(los) vehículo(s) a revisar.</li>
+  <li>Resultado de verificación en listas restrictivas (registrado por el sistema).</li>
+  <li>Firma y fecha.</li>
+</ul>
+<h3><strong>8.2 Información mínima — Persona Jurídica</strong></h3>
+<p>Para vincular a una persona jurídica (empresa de transporte, proveedor corporativo, etc.):</p>
+<ul>
+  <li>Razón social y NIT.</li>
+  <li>Representante legal: nombre, cédula, cargo.</li>
+  <li>Actividad económica (código CIIU).</li>
+  <li>Dirección comercial y teléfono.</li>
+  <li>Correo electrónico corporativo.</li>
+  <li>Composición accionaria (personas naturales con ≥5% del capital).</li>
+  <li>Identificación del Beneficiario Final.</li>
+  <li>Declaración de PEPs dentro de la estructura.</li>
+  <li>Origen de los fondos para el pago.</li>
+  <li>Certificado de existencia y representación legal (no mayor a 30 días).</li>
+  <li>Resultado de verificación en listas restrictivas de la empresa y sus representantes.</li>
+</ul>
+<h3><strong>8.3 Debida Diligencia Intensificada</strong></h3>
+<p>Se aplica obligatoriamente en los siguientes casos:</p>
+<ul>
+  <li>La contraparte es o ha sido PEP en los últimos 2 años.</li>
+  <li>La contraparte opera en zonas de alto riesgo o con presencia de grupos armados.</li>
+  <li>El valor de las transacciones es inusualmente alto para el perfil del cliente.</li>
+  <li>Existen inconsistencias entre la información declarada y la verificada.</li>
+  <li>La contraparte presenta coincidencias parciales en listas restrictivas.</li>
+  <li>El pago se realiza en efectivo por montos superiores a los umbrales establecidos.</li>
+</ul>
+<p>En estos casos, el Oficial de Cumplimiento debe documentar las medidas adicionales tomadas y obtener aprobación expresa antes de proceder.</p>
+<h2><strong>9. SEÑALES DE ALERTA PARA CDA</strong></h2>
+<table>
+  <thead>
+    <tr><th>Factor</th><th>Señal de Alerta</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Clientes</td><td>Uso de documentos falsos o inconsistentes.</td></tr>
+    <tr><td>Transacciones</td><td>Pagos masivos en efectivo de origen no justificado.</td></tr>
+    <tr><td>Vehículos</td><td>Revisión frecuente de vehículos de alto valor por terceros no autorizados.</td></tr>
+  </tbody>
+</table>
+<p>Las siguientes situaciones deben generar una alerta y ser reportadas al Oficial de Cumplimiento:</p>
+<ul>
+  <li>Cliente que paga la revisión técnica en efectivo con billetes en denominaciones inusuales o moneda extranjera.</li>
+  <li>Tercero que paga la revisión de un vehículo que no es de su propiedad, sin justificación razonable.</li>
+  <li>Vehículo con placa raspada, alterada o con VIN inconsistente con los documentos presentados.</li>
+  <li>Vehículo reportado como hurtado en el RUNT o en bases de datos consultadas.</li>
+  <li>Cliente que presenta documentos de identidad con signos de falsificación o alteración.</li>
+  <li>Cliente que se niega a suministrar información sobre el origen de los fondos o el uso del vehículo.</li>
+  <li>Empresa de transporte que ingresa un número inusualmente alto de vehículos en un corto período.</li>
+  <li>Solicitud de revisión urgente o fuera de horario habitual con oferta de pago por encima de la tarifa normal.</li>
+  <li>Cliente con coincidencia total o parcial en listas vinculantes (OFAC, ONU, UIAF).</li>
+  <li>Vehículo que ha sido revisado múltiples veces en períodos cortos por diferentes personas.</li>
+</ul>
+<h2><strong>10. REPORTES A LA UIAF</strong></h2>
+<h3><strong>10.1 Reporte de Operación Sospechosa (ROS)</strong></h3>
+<p>{{ razon_social }} está obligada a reportar a la UIAF, a través del sistema SIREL (https://www.uiaf.gov.co), toda operación que se considere sospechosa de estar relacionada con LA/FT/FP, sin importar el monto de la transacción.</p>
+<p>Una operación es sospechosa cuando, independientemente del monto:</p>
+<ul>
+  <li>No guarda relación con el perfil económico conocido del cliente.</li>
+  <li>El cliente intenta justificar la operación con documentos falsos o inconsistentes.</li>
+  <li>La operación coincide con tipologías de lavado de activos conocidas para el sector transporte.</li>
+  <li>El Oficial de Cumplimiento, con base en su criterio profesional, tiene razones fundadas para sospechar.</li>
+</ul>
+<p>El plazo para reportar un ROS es de máximo 24 horas hábiles desde que se detecta la operación sospechosa. La información reportada es CONFIDENCIAL y no debe revelarse al sujeto investigado.</p>
+<h3><strong>10.2 Reporte de Ausencia de Operaciones Sospechosas</strong></h3>
+<p>Cuando no se presenten operaciones sospechosas en un período determinado, el Oficial de Cumplimiento debe reportar la ausencia conforme a los plazos que establezca la UIAF.</p>
+<h2><strong>11. PROGRAMA DE CAPACITACIÓN</strong></h2>
+<p>{{ razon_social }} implementa un programa de capacitación anual obligatorio para todos los empleados sobre LA/FT/FP, con los siguientes componentes:</p>
+<table>
+  <thead>
+    <tr><th>Módulo</th><th>Contenido</th><th>Duración</th><th>Periodicidad</th><th>Dirigido a</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Módulo 1 — Marco legal</td><td>Res. 2328/2025, 4607/2026, Ley 1121/2006. Aplicabilidad al CDA.</td><td>2 horas</td><td>Anual</td><td>Todo el personal</td></tr>
+    <tr><td>Módulo 2 — Conocimiento del Cliente (KYC)</td><td>Formularios de vinculación, identidad, listas restrictivas.</td><td>2 horas</td><td>Anual</td><td>Personal de atención</td></tr>
+    <tr><td>Módulo 3 — Señales de alerta</td><td>Tipologías de LA/FT en el sector automotor y reportes.</td><td>2 horas</td><td>Anual</td><td>Todo el personal</td></tr>
+    <tr><td>Módulo 4 — Reporte a la UIAF</td><td>ROS, SIREL, Confidencialidad.</td><td>1 hora</td><td>Anual</td><td>OC y directivos</td></tr>
+    <tr><td>Módulo 5 — Inducción</td><td>Versión abreviada del SARLAFT y sanciones.</td><td>1 hora</td><td>Al ingreso</td><td>Nuevos empleados</td></tr>
+  </tbody>
+</table>
+<p>Cada capacitación debe generar evidencia documental: lista de asistencia, material entregado y evaluación de comprensión.</p>
+<h2><strong>12. GESTIÓN DOCUMENTAL Y CONSERVACIÓN DE EVIDENCIAS</strong></h2>
+<p>El Oficial de Cumplimiento es responsable de custodiar y mantener disponibles los siguientes documentos por un mínimo de 5 años:</p>
+<ul>
+  <li>Formularios de vinculación de contrapartes (KYC) firmados.</li>
+  <li>Resultados de verificación en listas restrictivas (fecha, usuario, lista consultada, resultado).</li>
+  <li>Registros de operaciones inusuales y decisiones tomadas.</li>
+  <li>Reportes ROS y acuses de recibo de la UIAF.</li>
+  <li>Actas de capacitación con listas de asistencia.</li>
+  <li>Informes periódicos presentados a la alta dirección.</li>
+  <li>Actas de aprobación del SARLAFT y sus actualizaciones por el máximo órgano social.</li>
+  <li>Registro de nombramiento del Oficial de Cumplimiento en SIREL.</li>
+</ul>
+<p>Los documentos físicos se custodian en archivo bajo llave. Los documentos digitales se almacenan en el sistema SARLAFT IA de Agentesia, con control de acceso y registro de auditoría.</p>
+<h2><strong>13. RÉGIMEN DE SANCIONES INTERNAS</strong></h2>
+<p>El incumplimiento de las disposiciones del presente manual por parte de empleados o directivos será sancionado conforme al reglamento interno de trabajo, pudiendo incluir:</p>
+<ul>
+  <li>Llamado de atención escrito.</li>
+  <li>Suspensión temporal sin remuneración.</li>
+  <li>Terminación del contrato de trabajo con justa causa.</li>
+  <li>Reporte a las autoridades competentes cuando el incumplimiento constituya un delito.</li>
+</ul>
+<p>Lo anterior, sin perjuicio de las sanciones administrativas que pueda imponer la Superintendencia de Transporte, que pueden oscilar entre 1 y 700 SMMLV según la gravedad de la infracción.</p>
+<h2><strong>14. VIGENCIA Y ACTUALIZACIÓN</strong></h2>
+<p>El presente Manual entra en vigencia a partir de su aprobación por el máximo órgano social de {{ razon_social }} el {{ fecha_aprobacion }}, y deroga cualquier documento anterior sobre la materia.</p>
+<p>Este manual debe ser revisado y actualizado:</p>
+<ul>
+  <li>Anualmente, como mínimo.</li>
+  <li>Cuando se expidan nuevas normas o modificaciones regulatorias relevantes.</li>
+  <li>Cuando se presenten cambios significativos en la operación o el perfil de riesgo de la empresa.</li>
+  <li>Cuando los resultados de la auditoría interna así lo recomienden.</li>
+</ul>
+<h2><strong>15. APROBACIÓN Y FIRMAS</strong></h2>
+<p><em>Aprobado en reunión del Máximo Órgano Social — {{ fecha_aprobacion }}</em></p>
+
+<!-- FIRMAS FINALES -->
+<div class="page-break"></div>
+<h2>15. Aprobación y Firmas</h2>
+<p>El presente Manual de Políticas y Procedimientos SARLAFT 4.0 ha sido revisado, discutido y aprobado por el Máximo Órgano Social de <strong>{{ razon_social }}</strong>, en sesión celebrada el día <strong>{{ fecha_implementacion }}</strong>, en la ciudad de <strong>{{ ciudad }}</strong>.</p>
+<div class="warning-box">DOCUMENTO VINCULANTE: Su incumplimiento acarrea sanciones administrativas y penales conforme a la Ley 1121 de 2006 y la Resolución 2328 de 2025.</div>
+
+<div style="text-align:center;margin-top:30px">
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ representante_legal }}</strong></p>
+    <p>Representante Legal</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ cedula_representante }}<br>{{ razon_social }}</p>
+  </div>
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_oc_completo | default(nombre_oc) }}</strong></p>
+    <p>Oficial de Cumplimiento</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ oc_cedula }}<br>Correo: {{ oc_correo }}</p>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Confidencial — Uso Interno {{ razon_social }} — NIT {{ nit }}</span>
+  <span>Res. 2328/2025 y 4607/2026 Supertransporte | v1.0</span>
+</div>
+
+</div>
+</body>
+</html>

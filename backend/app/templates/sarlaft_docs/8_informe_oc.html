@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:10pt;color:#1a1a1a;line-height:1.5}
+.page{padding:2cm 2.5cm}
+.header{border-bottom:3px solid #1F4E79;padding-bottom:8px;margin-bottom:20px;display:flex;justify-content:space-between}
+.header-title{font-size:9pt;color:#555;font-weight:bold}
+.footer{border-top:1px solid #2E75B6;margin-top:30px;padding-top:6px;font-size:8pt;color:#888;display:flex;justify-content:space-between}
+h1{color:#1F4E79;font-size:16pt;font-weight:700;text-align:center;margin:16px 0 6px;text-transform:uppercase}
+h2{color:#2E75B6;font-size:11pt;font-weight:700;margin:16px 0 8px;border-left:4px solid #2E75B6;padding-left:8px;text-transform:uppercase}
+p{margin-bottom:8px;text-align:justify;font-size:10pt}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9pt}
+th{background:#1F4E79;color:#fff;border:1px solid #999;padding:7px;text-align:center}
+td{border:1px solid #CCC;padding:6px 8px;vertical-align:top}
+.bg-blue{background:#D6E4F0}
+.sign-block{border:1px solid #CCC;padding:50px 10px 10px;text-align:center;width:47%;display:inline-block;vertical-align:top;margin:10px 1%}
+.sign-line{border-top:1px solid #333;width:80%;margin:0 auto 6px}
+</style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="header-title">INFORME PERIÓDICO OC | {{ razon_social }}</div>
+  <div class="header-title">v{{ version_informe }} | {{ fecha_implementacion }}</div>
+</div>
+
+<h1>Informe Periódico del Oficial de Cumplimiento</h1>
+<p style="text-align:center;color:#2E75B6;font-weight:bold;font-size:11pt;margin-bottom:4px">Presentación al Máximo Órgano Social — SARLAFT</p>
+<p style="text-align:center;font-size:8.5pt;color:#666;margin-bottom:20px">{{ razon_social }} — NIT {{ nit }} | Res. 2328/2025 Supertransporte</p>
+
+<table style="margin-bottom:16px">
+  <tr><th style="width:35%">Dato</th><th>Información</th></tr>
+  <tr><td>Período reportado</td><td>{{ periodo_inicio }} al {{ periodo_fin }}</td></tr>
+  <tr class="bg-blue"><td>Fecha de elaboración</td><td>{{ fecha_informe }}</td></tr>
+  <tr><td>Oficial de Cumplimiento</td><td>{{ nombre_oc }}</td></tr>
+  <tr class="bg-blue"><td>Versión del informe</td><td>{{ version_informe }}</td></tr>
+</table>
+
+<h2>1. Resumen Ejecutivo</h2>
+<p>{{ resumen_ejecutivo }}</p>
+
+<h2>2. Estado General del SARLAFT</h2>
+<table>
+  <tr><th>Componente del SARLAFT</th><th style="width:20%">Estado</th><th>Observaciones</th></tr>
+  <tr><td>Política LA/FT/FP aprobada y vigente</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr class="bg-blue"><td>Manual SARLAFT actualizado</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr><td>Matriz de riesgos actualizada</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr class="bg-blue"><td>Formularios KYC implementados</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr><td>Registro en SIREL actualizado</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr class="bg-blue"><td>Capacitaciones realizadas en el período</td><td>☐ Cumple ☐ Pendiente</td><td></td></tr>
+  <tr><td>Auditoría interna realizada (si aplica)</td><td>☐ Cumple ☐ N/A</td><td></td></tr>
+</table>
+
+<h2>3. Estadísticas del Período</h2>
+<table>
+  <tr><th>Indicador</th><th>Resultado</th></tr>
+  <tr><td>Total de contrapartes nuevas vinculadas</td><td>{{ contrapartes_nuevas }}</td></tr>
+  <tr class="bg-blue"><td>Verificaciones en listas realizadas</td><td>{{ verificaciones_listas }}</td></tr>
+  <tr><td>Coincidencias positivas en listas</td><td>{{ coincidencias_positivas }}</td></tr>
+  <tr class="bg-blue"><td>Casos rechazados por riesgo alto</td><td>{{ casos_rechazados }}</td></tr>
+  <tr><td>Operaciones inusuales detectadas</td><td>{{ op_inusuales }}</td></tr>
+  <tr class="bg-blue"><td>Reportes ROS enviados a UIAF</td><td>{{ ros_enviados }}</td></tr>
+  <tr><td>Reportes de ausencia de ROS (AROS)</td><td>{{ ausencia_ros }}</td></tr>
+  <tr class="bg-blue"><td>Empleados capacitados en el período</td><td>{{ empleados_capacitados }}</td></tr>
+  <tr><td>Señales de alerta gestionadas</td><td>{{ alertas_gestionadas }}</td></tr>
+</table>
+
+<h2>4. Casos Relevantes del Período</h2>
+<p>{{ descripcion_casos_relevantes }}</p>
+
+<h2>5. Deficiencias Identificadas y Planes de Mejora</h2>
+<table>
+  <tr><th>Deficiencia identificada</th><th>Plan de mejora</th><th>Fecha límite</th></tr>
+  <tr><td>{{ deficiencia_1 }}</td><td>{{ plan_1 }}</td><td>{{ fecha_1 }}</td></tr>
+  <tr class="bg-blue"><td>{{ deficiencia_2 }}</td><td>{{ plan_2 }}</td><td>{{ fecha_2 }}</td></tr>
+  <tr><td>{{ deficiencia_3 }}</td><td>{{ plan_3 }}</td><td>{{ fecha_3 }}</td></tr>
+</table>
+
+<h2>6. Cambios Normativos del Período</h2>
+<p>{{ cambios_normativos }}</p>
+
+<h2>7. Recomendaciones a la Alta Dirección</h2>
+<p>{{ recomendaciones }}</p>
+
+<h2>8. Declaración del Oficial de Cumplimiento</h2>
+<p>El suscrito Oficial de Cumplimiento certifica que la información contenida en el presente informe es veraz y refleja el estado real del SARLAFT de <strong>{{ razon_social }}</strong> durante el período reportado, de conformidad con la Resolución 2328 de 2025 de la Superintendencia de Transporte.</p>
+
+<div style="text-align:center;margin-top:24px">
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_oc }}</strong></p>
+    <p>Oficial de Cumplimiento</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ oc_cedula }}</p>
+  </div>
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_receptor }}</strong></p>
+    <p>{{ cargo_receptor }}</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ cedula_receptor }}</p>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Confidencial — Uso Interno {{ razon_social }}</span>
+  <span>Res. 2328/2025 Supertransporte</span>
+</div>
+</div>
+</body>
+</html>

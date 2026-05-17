@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+*.pdf
+*.zip
+.pytest_cache/
+node_modules/
+.next/

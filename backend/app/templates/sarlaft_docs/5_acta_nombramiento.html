@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:10pt;color:#1a1a1a;line-height:1.5}
+.page{padding:2cm 2.5cm}
+.header{border-bottom:3px solid #1F4E79;padding-bottom:8px;margin-bottom:20px;display:flex;justify-content:space-between}
+.header-title{font-size:9pt;color:#555;font-weight:bold}
+.footer{border-top:1px solid #2E75B6;margin-top:30px;padding-top:6px;font-size:8pt;color:#888;display:flex;justify-content:space-between}
+h1{color:#1F4E79;font-size:16pt;font-weight:700;text-align:center;margin:16px 0 6px;text-transform:uppercase}
+h2{color:#2E75B6;font-size:11pt;font-weight:700;margin:16px 0 8px;border-left:4px solid #2E75B6;padding-left:8px;text-transform:uppercase}
+h3{color:#1F4E79;font-size:10pt;font-weight:700;margin:10px 0 5px}
+p{margin-bottom:8px;text-align:justify;font-size:10pt}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9pt}
+th{background:#1F4E79;color:#fff;border:1px solid #999;padding:7px;text-align:center}
+td{border:1px solid #CCC;padding:6px 8px;vertical-align:top}
+.bg-blue{background:#D6E4F0}
+.sign-block{border:1px solid #CCC;padding:50px 10px 10px;text-align:center;width:47%;display:inline-block;vertical-align:top;margin:10px 1%}
+.sign-line{border-top:1px solid #333;width:80%;margin:0 auto 6px}
+ul{margin:6px 0 10px 18px}
+li{margin-bottom:4px;font-size:9.5pt}
+.section-box{border:1px solid #2E75B6;border-radius:4px;padding:10px 14px;margin:10px 0}
+.page-break{page-break-after:always;height:1px}
+.alert{background:#FFF2CC;border-left:4px solid #C00000;padding:8px 12px;margin:10px 0;font-size:9pt}
+@media print { table { page-break-inside: avoid; width: 100%; border-collapse: collapse; } tr { page-break-inside: avoid; page-break-after: auto; } thead { display: table-header-group; } h2, h3 { page-break-after: avoid; } }
+</style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="header-title">ACTA NOMBRAMIENTO OC | {{ razon_social }}</div>
+  <div class="header-title">v1.0 | {{ fecha_implementacion }}</div>
+</div>
+
+<h1>Acta de Nombramiento</h1>
+<p style="text-align:center;color:#2E75B6;font-weight:bold;font-size:12pt;margin-bottom:4px">Oficial de Cumplimiento SARLAFT</p>
+<p style="text-align:center;font-size:8.5pt;color:#666;margin-bottom:20px">Res. 2328/2025 y Res. 4607/2026 — Superintendencia de Transporte</p>
+
+<table style="margin-bottom:16px">
+  <tr><th style="width:30%">Dato</th><th>Información</th></tr>
+  <tr><td>Empresa</td><td><strong>{{ razon_social }}</strong></td></tr>
+  <tr class="bg-blue"><td>NIT</td><td>{{ nit }}</td></tr>
+  <tr><td>Domicilio</td><td>{{ ciudad }}, {{ departamento }}</td></tr>
+  <tr class="bg-blue"><td>Dirección</td><td>{{ direccion }}</td></tr>
+  <tr><td>Fecha del Acta</td><td>{{ fecha_implementacion }}</td></tr>
+  <tr class="bg-blue"><td>Acta No.</td><td>{{ numero_acta }}</td></tr>
+</table>
+
+<h2>1. Reunión del Máximo Órgano Social</h2>
+<p>En la ciudad de <strong>{{ ciudad }}</strong>, Departamento de <strong>{{ departamento }}</strong>, el día <strong>{{ fecha_implementacion }}</strong>, se reunió el Máximo Órgano Social / Junta Directiva de <strong>{{ razon_social }}</strong>, identificada con NIT <strong>{{ nit }}</strong>, con el objeto de designar al Oficial de Cumplimiento del Sistema de Administración del Riesgo de Lavado de Activos, Financiación del Terrorismo y Financiación de la Proliferación de Armas de Destrucción Masiva (SARLAFT), en cumplimiento de lo dispuesto en la <strong>Resolución 2328 de 2025</strong> y la <strong>Resolución 4607 de 2026</strong> de la Superintendencia de Transporte, y de conformidad con el <strong>Artículo 5.6.7 del RUNT</strong>.</p>
+
+<h2>2. Designación del Oficial de Cumplimiento Principal</h2>
+<p>El Máximo Órgano Social, con plenas facultades legales y estatutarias, designa como <strong>Oficial de Cumplimiento Principal</strong> de {{ razon_social }} a:</p>
+
+<table>
+  <tr><th style="width:35%">Dato</th><th>Información</th></tr>
+  <tr><td>Nombre completo</td><td><strong>{{ nombre_oc }}</strong></td></tr>
+  <tr class="bg-blue"><td>Cédula de ciudadanía</td><td>{{ oc_cedula }}</td></tr>
+  <tr><td>Correo electrónico oficial</td><td>{{ oc_correo }}</td></tr>
+  <tr class="bg-blue"><td>Formación acreditada en LA/FT/FP</td><td>{{ oc_formacion }} — <strong>{{ horas_formacion_oc }} horas</strong> (mín. 90 h. según Res. 2328/2025)</td></tr>
+  <tr><td>Institución certificante</td><td>{{ institucion_certificante_oc }}</td></tr>
+  <tr class="bg-blue"><td>Experiencia en LA/FT/FP</td><td>
+  <strong>
+    {% if oc_experiencia_meses >= 12 %}
+      {{ (oc_experiencia_meses // 12) }} año(s) y {{ (oc_experiencia_meses % 12) }} mes(es)
+    {% else %}
+      {{ oc_experiencia_meses }} mes(es)
+    {% endif %}
+  </strong>
+  </td></tr>
+  <tr><td>Cursos e-Learning UIAF</td><td>Acreditados — Constancia adjunta al expediente</td></tr>
+  <tr class="bg-blue"><td>Registro en SIREL (UIAF)</td><td>Se realizará dentro de los 15 días hábiles siguientes a la presente designación</td></tr>
+</table>
+
+<h2>3. Oficial de Cumplimiento Suplente</h2>
+<p>Así mismo, se designa como Oficial de Cumplimiento Suplente, quien reemplazará al principal en caso de ausencia temporal o definitiva:</p>
+<table>
+  <tr><th style="width:35%">Dato</th><th>Información</th></tr>
+  <tr><td>Nombre completo</td><td><strong>{{ oc_suplente_nombre }}</strong></td></tr>
+  <tr class="bg-blue"><td>Cédula de ciudadanía</td><td>{{ oc_suplente_cedula }}</td></tr>
+  <tr><td>Correo electrónico</td><td>{{ oc_suplente_correo }}</td></tr>
+</table>
+
+<h2>4. Funciones y Responsabilidades del OC</h2>
+<p>De conformidad con el <strong>Artículo 5.6.7 de la Resolución 2328 de 2025</strong>, el Oficial de Cumplimiento tendrá las siguientes funciones:</p>
+<ol style="margin:6px 0 10px 20px">
+  <li>Diseñar, implementar, actualizar y velar por el funcionamiento efectivo del SARLAFT de la entidad.</li>
+  <li>Realizar la verificación de contrapartes (clientes, proveedores, empleados) en listas restrictivas nacionales e internacionales vinculantes.</li>
+  <li>Presentar informes periódicos a la alta dirección y al Máximo Órgano Social sobre el estado del sistema.</li>
+  <li>Gestionar y transmitir los reportes a la UIAF a través del sistema <strong>SIREL</strong> (ROS y AROS).</li>
+  <li>Coordinar y ejecutar el programa anual de capacitación en LA/FT/FP para todos los empleados.</li>
+  <li>Mantener actualizados los registros del SARLAFT y garantizar su disponibilidad para inspecciones de la Superintendencia de Transporte.</li>
+  <li>Registrar el presente nombramiento en el sistema SIREL de la UIAF dentro de los términos legales establecidos.</li>
+</ol>
+
+<h2>5. Compromisos del Oficial de Cumplimiento</h2>
+<div class="section-box">
+<p>Yo, <strong>{{ nombre_oc }}</strong>, identificado(a) con cédula de ciudadanía No. <strong>{{ oc_cedula }}</strong>, acepto el cargo de Oficial de Cumplimiento Principal de <strong>{{ razon_social }}</strong> y me comprometo formalmente a:</p>
+<ul>
+  <li>Ejercer mis funciones con total <strong>independencia funcional</strong> frente a los órganos de administración, control y auditoría interna.</li>
+  <li>Mantener actualizada mi formación en materia de LA/FT/FP conforme a los estándares del GAFI y la UIAF.</li>
+  <li>Guardar <strong>absoluta reserva</strong> sobre la información de reportes de operaciones sospechosas, bajo las sanciones previstas en la Ley 1121 de 2006.</li>
+  <li>Actuar con objetividad, criterio técnico y diligencia profesional en todas mis decisiones.</li>
+  <li>Registrar el nombramiento en SIREL en los plazos establecidos por la normativa vigente.</li>
+</ul>
+</div>
+
+<h2>6. Firmas de Aprobación</h2>
+<div style="text-align:center;margin-top:24px">
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ representante_legal }}</strong></p>
+    <p>Representante Legal</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ cedula_representante }}</p>
+    <p style="font-size:8.5pt;color:#666">{{ razon_social }}</p>
+  </div>
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_oc }}</strong></p>
+    <p>Oficial de Cumplimiento Principal</p>
+    <p style="font-size:8.5pt;color:#666">C.C. {{ oc_cedula }}</p>
+    <p style="font-size:8.5pt;color:#666">Correo: {{ oc_correo }}</p>
+  </div>
+</div>
+
+<div class="alert" style="margin-top:20px">
+  <strong>Nota legal:</strong> El presente nombramiento debe registrarse ante la UIAF a través del sistema SIREL dentro de los quince (15) días hábiles siguientes a su firma, conforme al Artículo 5.6.7 de la Resolución 2328 de 2025.
+</div>
+
+<p style="text-align:center;margin-top:14px;font-size:8.5pt;color:#888;font-style:italic">
+  Acta aprobada el {{ fecha_implementacion }} — {{ razon_social }} — NIT {{ nit }}
+</p>
+
+<div class="footer">
+  <span>Confidencial — Uso Interno {{ razon_social }}</span>
+  <span>Res. 2328/2025 Supertransporte</span>
+</div>
+</div>
+</body>
+</html>

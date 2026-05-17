@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',Arial,sans-serif;font-size:10pt;color:#1a1a1a;line-height:1.5}
+.page{padding:2cm 2.5cm;min-height:29.7cm}
+.header{border-bottom:3px solid #1F4E79;padding-bottom:8px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.header-title{font-size:9pt;color:#555;font-weight:bold}
+.footer{border-top:1px solid #2E75B6;margin-top:30px;padding-top:6px;font-size:8pt;color:#888;display:flex;justify-content:space-between}
+h1{color:#1F4E79;font-size:17pt;font-weight:700;text-align:center;margin:16px 0 6px;text-transform:uppercase;letter-spacing:0.5px}
+h2{color:#2E75B6;font-size:12pt;font-weight:700;margin:18px 0 8px;border-left:4px solid #2E75B6;padding-left:8px;text-transform:uppercase}
+h3{color:#1F4E79;font-size:10pt;font-weight:700;margin:12px 0 6px}
+p{margin-bottom:8px;text-align:justify;font-size:10pt}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:9pt}
+th{background:#1F4E79;color:#fff;border:1px solid #999;padding:7px;text-align:center;font-size:8.5pt}
+td{border:1px solid #CCC;padding:6px 8px;vertical-align:top}
+.bg-blue{background:#D6E4F0}
+.bg-red{background:#FFE5E5}
+.center{text-align:center}
+.badge-alto{background:#C00000;color:#fff;padding:2px 6px;border-radius:3px;font-weight:bold;font-size:8pt}
+.badge-medio{background:#ED7D31;color:#fff;padding:2px 6px;border-radius:3px;font-weight:bold;font-size:8pt}
+.badge-bajo{background:#375623;color:#fff;padding:2px 6px;border-radius:3px;font-weight:bold;font-size:8pt}
+.sign-block{border:1px solid #CCC;padding:50px 10px 10px;text-align:center;width:47%;display:inline-block;vertical-align:top;margin:10px 1%}
+.sign-line{border-top:1px solid #333;width:80%;margin:0 auto 6px}
+ul{margin:4px 0 8px 18px}
+li{margin-bottom:3px;font-size:9.5pt}
+.label{font-weight:700;display:inline}
+.section-box{border:1px solid #2E75B6;border-radius:4px;padding:10px 14px;margin:12px 0}
+.alert-red{background:#FFF2CC;border-left:4px solid #C00000;padding:8px 12px;margin:10px 0;font-size:9pt;font-weight:bold;color:#C00000}
+.page-break{page-break-after:always;height:1px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;margin:8px 0}
+.info-item{font-size:9.5pt}
+@media print { table { page-break-inside: avoid; width: 100%; border-collapse: collapse; } tr { page-break-inside: avoid; page-break-after: auto; } thead { display: table-header-group; } h2, h3 { page-break-after: avoid; } }
+</style>
+<style> body { font-family: 'Arial', 'Helvetica', sans-serif !important; } </style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+  <div class="header-title">FORMATO KYC | {{ razon_social }}</div>
+  <div class="header-title">v1.0 | {{ fecha_implementacion }}</div>
+</div>
+
+<h1>Formulario de Vinculación de Contrapartes</h1>
+<p class="center" style="color:#2E75B6;font-weight:bold;font-size:11pt;margin-bottom:2px">Persona Natural — Conocimiento del Cliente (KYC)</p>
+<p class="center" style="font-size:8pt;color:#666;margin-bottom:16px">Res. 2328/2025 Supertransporte — Obligatorio para toda vinculación</p>
+
+<div class="info-grid" style="margin-bottom:12px">
+  <div class="info-item"><span class="label">Empresa:</span> {{ razon_social }}</div>
+  <div class="info-item"><span class="label">NIT:</span> {{ nit }}</div>
+  <div class="info-item"><span class="label">Fecha de vinculación:</span> {{ fecha_vinculacion }}</div>
+  <div class="info-item"><span class="label">No. Registro:</span> {{ numero_registro }}</div>
+  <div class="info-item"><span class="label">Tipo de contraparte:</span> {{ tipo_contraparte }}</div>
+  <div class="info-item"><span class="label">Oficial de Cumplimiento:</span> {{ nombre_oc }}</div>
+</div>
+
+<h2>Sección 1 — Identificación</h2>
+<table>
+  <tr><th style="width:35%">Campo</th><th style="width:40%">Dato declarado por el cliente</th><th style="width:25%">Verificado por el sistema</th></tr>
+  <tr><td>Nombre completo</td><td></td><td>☐ Verificado</td></tr>
+  <tr class="bg-blue"><td>Tipo de documento</td><td>☐ CC &nbsp; ☐ CE &nbsp; ☐ Pasaporte &nbsp; ☐ NIP</td><td>☐ Verificado</td></tr>
+  <tr><td>Número de documento</td><td></td><td>☐ Vigente</td></tr>
+  <tr class="bg-blue"><td>Fecha y lugar de expedición</td><td></td><td></td></tr>
+  <tr><td>Fecha de nacimiento</td><td></td><td></td></tr>
+  <tr class="bg-blue"><td>Lugar de nacimiento</td><td></td><td></td></tr>
+  <tr><td>Nacionalidad</td><td></td><td></td></tr>
+  <tr class="bg-blue"><td>Estado civil</td><td>☐ Soltero ☐ Casado ☐ Unión libre ☐ Otro</td><td></td></tr>
+</table>
+
+<h2>Sección 2 — Información de Persona Jurídica (Si aplica)</h2>
+<table>
+  <tr><th style="width:35%">Campo</th><th>Dato</th></tr>
+  <tr><td>Razón Social</td><td>___________________________</td></tr>
+  <tr class="bg-blue"><td>NIT</td><td>___________________________</td></tr>
+  <tr><td>Representante Legal — Nombre</td><td>___________________________</td></tr>
+  <tr class="bg-blue"><td>Representante Legal — Cédula</td><td>___________________________</td></tr>
+  <tr><td>Representante Legal — Cargo</td><td>___________________________</td></tr>
+  <tr class="bg-blue"><td>Actividad económica (CIIU)</td><td>___________________________</td></tr>
+  <tr><td>Tipo de empresa</td><td>☐ S.A.S. &nbsp; ☐ S.A. &nbsp; ☐ Ltda. &nbsp; ☐ Otro: _______</td></tr>
+  <tr class="bg-blue"><td>Composición accionaria (>5%)</td><td>___________________________</td></tr>
+  <tr>
+    <td>Beneficiario Final<br>
+      <small style="font-size:8pt;color:#666">(persona natural con control último)</small>
+    </td>
+    <td>
+      Nombre: ___________________________<br>
+      Cédula: ___________________________<br>
+      % participación: ___________________
+    </td>
+  </tr>
+  <tr class="bg-blue">
+    <td>¿Algún socio/representante es PEP?</td>
+    <td>☐ Sí — Nombre: _______________ Cargo: _______________<br>☐ No</td>
+  </tr>
+  <tr>
+    <td>Certificado de existencia y representación</td>
+    <td>☐ Adjunto (no mayor a 30 días) &nbsp; Fecha: ___________</td>
+  </tr>
+</table>
+
+<h2>Sección 3 — Contacto y Residencia</h2>
+<table>
+  <tr><th style="width:35%">Campo</th><th>Dato</th></tr>
+  <tr><td>Dirección de residencia</td><td></td></tr>
+  <tr class="bg-blue"><td>Ciudad / Municipio</td><td></td></tr>
+  <tr><td>Departamento</td><td></td></tr>
+  <tr class="bg-blue"><td>Teléfono / Celular</td><td></td></tr>
+  <tr><td>Correo electrónico</td><td></td></tr>
+</table>
+
+<h2>Sección 4 — Actividad Económica y Origen de Fondos</h2>
+<table>
+  <tr><th style="width:35%">Campo</th><th>Dato</th></tr>
+  <tr><td>Ocupación / Actividad económica principal</td><td></td></tr>
+  <tr class="bg-blue"><td>Empresa donde trabaja (si aplica)</td><td></td></tr>
+  <tr><td>Cargo</td><td></td></tr>
+  <tr class="bg-blue"><td>Ingresos mensuales aproximados</td><td>☐ &lt;$1.5M &nbsp; ☐ $1.5M–$5M &nbsp; ☐ $5M–$15M &nbsp; ☐ &gt;$15M</td></tr>
+  <tr><td>Otros ingresos (especificar origen)</td><td></td></tr>
+  <tr class="bg-blue"><td>Origen de los fondos para el pago</td><td>☐ Salario &nbsp; ☐ Negocio propio &nbsp; ☐ Ahorros &nbsp; ☐ Crédito &nbsp; ☐ Otro: ______</td></tr>
+  <tr><td>Forma de pago</td><td>☐ Efectivo &nbsp; ☐ Tarjeta &nbsp; ☐ Transferencia &nbsp; ☐ Otro: ______</td></tr>
+  <tr class="bg-blue"><td>¿Recibe o envía remesas del/al exterior?</td><td>☐ Sí — País: ________ &nbsp; ☐ No</td></tr>
+</table>
+
+<h2>Sección 5 — Información del Vehículo</h2>
+<table>
+  <tr><th style="width:30%">Campo</th><th>Vehículo 1</th><th>Vehículo 2 (si aplica)</th></tr>
+  <tr><td>Placa</td><td></td><td></td></tr>
+  <tr class="bg-blue"><td>Marca / Línea / Modelo</td><td></td><td></td></tr>
+  <tr><td>Año</td><td></td><td></td></tr>
+  <tr class="bg-blue"><td>El solicitante es propietario del vehículo</td><td>☐ Sí &nbsp; ☐ No</td><td>☐ Sí &nbsp; ☐ No</td></tr>
+  <tr><td>Si NO es propietario, relación con el vehículo</td><td>☐ Arrendatario ☐ Mandatario ☐ Otro: ___</td><td>☐ Arrendatario ☐ Mandatario ☐ Otro: ___</td></tr>
+  <tr class="bg-blue"><td>Nombre del propietario registrado en RUNT</td><td></td><td></td></tr>
+  <tr><td>Verificado en RUNT por el OC</td><td>☐ Sí &nbsp; ☐ No</td><td>☐ Sí &nbsp; ☐ No</td></tr>
+</table>
+
+<h2>Sección 6 — Declaración de PEP</h2>
+<div class="section-box">
+<p><strong>Marque la opción que corresponde con exactitud:</strong></p>
+<ul style="list-style:none;padding-left:0">
+  <li>☐ <strong>NO</strong> soy ni he sido Persona Expuesta Políticamente (PEP) en los últimos 2 años.</li>
+  <li>☐ <strong>SÍ</strong> soy o he sido PEP. Cargo: _________________ &nbsp; Entidad: _________________ &nbsp; Hasta: _________</li>
+  <li>☐ Un <strong>familiar hasta 2° grado de consanguinidad o 1° de afinidad</strong> es o ha sido PEP.<br>
+      &nbsp;&nbsp;&nbsp;Nombre: _________________ &nbsp; Relación: _________________ &nbsp; Cargo: _________________</li>
+</ul>
+<p style="font-size:8.5pt;color:#C00000;margin-top:8px">⚠ La declaración falsa de la condición PEP constituye falta grave y podrá reportarse a las autoridades competentes.</p>
+</div>
+
+<div class="page-break"></div>
+
+<h2>Sección 7 — Verificación en Listas Restrictivas</h2>
+<p style="font-size:8.5pt;color:#555">Responsabilidad exclusiva del Oficial de Cumplimiento. Debe registrarse para cada vinculación.</p>
+<table>
+  <tr><th>Lista consultada</th><th>Fecha consulta</th><th>Resultado</th><th>Observaciones</th></tr>
+  <tr><td>OFAC — Lista Clinton (SDN)</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr class="bg-blue"><td>ONU — Consejo de Seguridad</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr><td>Unión Europea (EU Sanctions)</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr class="bg-blue"><td>Cancillería Colombia</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr><td>Policía Nacional — Antecedentes Judiciales</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr class="bg-blue"><td>Procuraduría — SIRI (Disciplinarios)</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr><td>Contraloría — Responsables Fiscales</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr class="bg-blue"><td>DIAN — Proveedores Ficticios</td><td></td><td>☐ Positivo &nbsp; ☐ Negativo</td><td></td></tr>
+  <tr><td>Registraduría — Vigencia de cédula</td><td></td><td>☐ Vigente &nbsp; ☐ Anulada</td><td></td></tr>
+</table>
+
+<h2>Sección 8 — Decisión del Oficial de Cumplimiento</h2>
+<table>
+  <tr><th style="width:33%">Nivel de riesgo asignado</th><th style="width:33%">Tipo de DD aplicada</th><th style="width:34%">Decisión final</th></tr>
+  <tr>
+    <td><span class="badge-alto">ALTO</span> &nbsp; <span class="badge-medio">MEDIO</span> &nbsp; <span class="badge-bajo">BAJO</span></td>
+    <td>☐ Estándar &nbsp; ☐ Intensificada</td>
+    <td>☐ Vincular &nbsp; ☐ Rechazar &nbsp; ☐ Monitoreo especial</td>
+  </tr>
+  <tr class="bg-blue"><td colspan="3"><strong>Justificación de la decisión:</strong><br><br><br></td></tr>
+</table>
+
+<h2>Sección 9 — Declaración y Firma del Cliente</h2>
+<div class="section-box">
+<p>Declaro bajo la gravedad del juramento que la información suministrada en este formulario es veraz, completa y actualizada a la fecha de su diligenciamiento. Autorizo expresamente a <strong>{{ razon_social }}</strong> a verificar la información en las fuentes que considere pertinentes y a reportar a las autoridades competentes, en especial a la UIAF, cualquier operación que pudiera estar relacionada con actividades ilícitas, de conformidad con la <strong>Ley 1121 de 2006</strong>, la <strong>Ley 2195 de 2022</strong> y la <strong>Resolución 2328 de 2025</strong> de la Superintendencia de Transporte.</p>
+</div>
+
+<div style="text-align:center;margin-top:20px">
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_cliente }}</strong></p>
+    <p>Cliente — C.C. {{ cedula_cliente }}</p>
+    <p style="font-size:8pt;color:#888">Fecha: ___________________</p>
+  </div>
+  <div class="sign-block">
+    <div class="sign-line"></div>
+    <p><strong>{{ nombre_oc }}</strong></p>
+    <p>Oficial de Cumplimiento — C.C. {{ oc_cedula }}</p>
+    <p style="font-size:8pt;color:#888">Fecha: ___________________</p>
+  </div>
+</div>
+
+<div class="footer">
+  <span>Confidencial — Uso Interno {{ razon_social }}</span>
+  <span>Res. 2328/2025 Supertransporte</span>
+</div>
+</div>
+</body>
+</html>
