@@ -4,12 +4,21 @@
 
 ## ESTADO DEL PROYECTO
 
-**Backend (Claude):** Autenticación implementada ✓
-- JWT tokens
+**Backend (Claude):** ✅ Autenticación COMPLETADA
+- JWT tokens (24 horas validez)
 - Endpoints: /api/v1/auth/register, /api/v1/auth/login, /api/v1/auth/me
 - Modelo actualizado: CDAEmpresa con email y password_hash
+- Probado: 200 OK en producción
 
-**Frontend (antigravity):** Pendiente - Iniciar hoy
+**Frontend (antigravity):** ✅ Autenticación COMPLETADA
+- AuthContext con gestión de tokens JWT
+- Páginas premium: /login y /register
+- Diseño glassmorphism con Framer Motion
+- Botón autocompletar demo (test@cda.com / Test123!)
+- Conectado a API: https://sarlaf.agentesia.cloud
+- Probado: Flujo login → dashboard funcionando
+
+**Progreso General:** 30% → 40% (2026-05-17 22:30)
 
 ## RAMAS GIT
 
@@ -31,12 +40,18 @@
 
 ## TAREAS CLAUDE (BACKEND)
 
-### Día 1 (Hoy - 2026-05-17)
+### Día 1 (Hoy - 2026-05-17) ✅ COMPLETADO
 - [x] Crear sistema autenticación (JWT, endpoints)
-- [ ] Probar endpoints en contenedor Docker
-- [ ] Migración BD para agregar email/password_hash
-- [ ] Documentar API en SWAGGER
-- [ ] Implementar logging de consultas históricas
+- [x] Probar endpoints en contenedor Docker
+- [x] Migración BD para agregar email/password_hash
+- [x] Documentar API (INSTRUCCIONES_ANTIGRAVITY.md)
+- [x] Coordinar con antigravity para frontend
+
+### Día 2 (Mañana - 2026-05-18)
+- [ ] Implementar logging de consultas históricas en BD
+- [ ] Crear modelo ConsultaHistorial con timestamps
+- [ ] Agregar endpoint GET /api/v1/historial
+- [ ] Agregar filtros (por fecha, por tipo, por contraparte)
 
 ### Semana 1 (Día 2-7)
 - [ ] Servicio de notificaciones por email
@@ -49,19 +64,28 @@
 
 ## TAREAS ANTIGRAVITY (FRONTEND)
 
-### Día 1 (Hoy - 2026-05-17)
-- [ ] Crear rama `feature/auth-frontend`
-- [ ] Crear página Login: `/cda/login/page.tsx`
-- [ ] Crear página Register: `/cda/register/page.tsx`
-- [ ] Conectar con API backend
-- [ ] Testing de login/register en navegador
+### Día 1 (Hoy - 2026-05-17) ✅ COMPLETADO
+- [x] Crear rama `feature/auth-claude` (compartida)
+- [x] Crear AuthContext con useAuth hook
+- [x] Crear página Login: `/login/page.tsx`
+- [x] Crear página Register: `/register/page.tsx`
+- [x] Conectar con API backend (https://sarlaf.agentesia.cloud)
+- [x] Testing de login/register en navegador
+- [x] Diseño premium glassmorphism + animaciones
+- [x] Botón autocompletar demo credentials
+
+### Día 2 (Mañana - 2026-05-18)
+- [ ] Crear página historial: `/cda/historial/page.tsx`
+- [ ] Tabla con filtros (fecha, tipo, contraparte)
+- [ ] Paginación de resultados
+- [ ] Exportar a PDF/Excel
 
 ### Semana 1 (Día 2-7)
-- [ ] Panel de historial de consultas
-- [ ] Dashboard admin
+- [ ] Dashboard admin con métricas
 - [ ] Formulario CRUD contrapartes
-- [ ] Sistema de notificaciones UI
+- [ ] Sistema de notificaciones UI (toast/notifications)
 - [ ] Panel de facturación
+- [ ] Reportes y estadísticas
 
 ---
 
