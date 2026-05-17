@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from .database import engine, Base, get_db
 from .routers import api_kyc, onboarding_router, admin_router
 # from .routers import contrapartes_router  # Temporarily disabled - needs get_current_user import
-from .routers import historial_router
+from .routers import historial_router, notificaciones_router
 from .auth import router as auth_router
 from .auth.dependencies import oauth2_scheme
 from .services.orchestrator_service import run_full_audit
@@ -46,6 +46,7 @@ app.add_middleware(
 # Include Routers
 app.include_router(auth_router.router, prefix="/api/v1")
 app.include_router(historial_router.router, prefix="/api/v1")
+app.include_router(notificaciones_router.router, prefix="/api/v1")
 app.include_router(api_kyc.router)
 app.include_router(onboarding_router.router)
 app.include_router(admin_router.router)
@@ -105,8 +106,9 @@ async def ejecutar_auditoria(
         tipo_documento = "PLACA"
 
     # Guardar en historial (async, no bloquea la respuesta)
+    registro_historial = None
     try:
-        await guardar_consulta_en_historial(
+        registro_historial = await guardar_consulta_en_historial(
             db=db,
             cda_id=cda_id,
             tipo_documento=tipo_documento,
@@ -120,6 +122,26 @@ async def ejecutar_auditoria(
     except Exception as e:
         # No fallar la consulta si hay error guardando historial
         print(f"Error guardando en historial: {e}")
+
+    # Enviar notificación por email (async, no bloquea la respuesta)
+    if registro_historial:
+        try:
+            from .services.email_integration import enviar_notificacion_post_consulta
+
+            # Obtener ruta del PDF si existe
+            pdf_path = None
+            if "pdf_url" in resultado:
+                pdf_filename = resultado["pdf_url"].replace("/api/v1/download/", "")
+                pdf_path = f"/app/app/services/{pdf_filename}"
+
+            # Enviar notificación en background (no esperar)
+            import asyncio
+            asyncio.create_task(
+                enviar_notificacion_post_consulta(db, registro_historial, pdf_path)
+            )
+        except Exception as e:
+            # No fallar la consulta si hay error enviando email
+            print(f"Error enviando notificación email: {e}")
 
     return resultado
 
