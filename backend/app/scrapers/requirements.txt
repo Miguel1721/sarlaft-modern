@@ -1,0 +1,45 @@
+# Requirements para scrapers SARLAFT
+# Autor: antigravity AI
+
+# Playwright para web scraping
+playwright==1.40.0
+
+# HTTP client
+httpx==0.25.2
+
+# Fuzzy matching para nombres
+rapidfuzz==3.5.2
+
+# Manejo de datos
+pandas==2.1.4
+numpy==1.26.2
+
+# Utilidades
+python-dateutil==2.8.2
+
+# Base de datos (opcional, para cache persistente)
+sqlalchemy==2.0.23
+aiosqlite==0.19.0
+
+# Asyncio
+asyncio==3.4.3
+
+# JSON
+orjson==3.9.10
+
+# Logging
+loguru==0.7.2
+
+# Rate limiting
+aiolimiter==1.1.0
+
+# Browser automation adicional
+selenium==4.15.2
+undetected-chromedriver==3.5.4
+
+# Proxy rotator (opcional)
+requests-rotator==0.0.1
+
+# CAPTCHA solving (opcional, requiere API key)
+# 2captcha-python==0.1.0
+# anticaptchaofficial==1.0.4

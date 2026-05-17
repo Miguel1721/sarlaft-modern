@@ -29,6 +29,12 @@ class OnboardingCDA(BaseModel):
     institucion_certificante_oc: str = "N/A"
     oc_experiencia_meses: int = Field(default=0, ge=0, description="Meses de experiencia en cumplimiento/SARLAFT")
     
+    @validator("horas_formacion_oc", pre=True)
+    def coerser_horas_formacion(cls, v):
+        if isinstance(v, (int, float)):
+            return str(int(v))
+        return v
+    
     @validator("nombre_oc")
     def debe_tener_apellido(cls, v):
         partes = v.strip().split()

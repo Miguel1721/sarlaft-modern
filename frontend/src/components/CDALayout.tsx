@@ -13,10 +13,10 @@ import {
 import { useTheme } from '@/context/ThemeContext';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/cda' },
-  { icon: Database, label: 'Deep Search', path: '/cda/deep-search' },
-  { icon: FileText, label: 'Fábrica Legal', path: '/cda/onboarding' },
-  { icon: FileText, label: 'Reportes / Historial', path: '/cda/reports' },
+  { icon: LayoutDashboard, label: 'Dashboard',          path: '/cda' },
+  { icon: Database,        label: 'Deep Search',         path: '/cda/deep-search' },
+  { icon: FileText,        label: 'Fábrica Legal',       path: '/cda/onboarding' },
+  { icon: FileText,        label: 'Reportes / Historial',path: '/cda/reports' },
 ];
 
 export default function CDALayout({ children }: { children?: React.ReactNode }) {

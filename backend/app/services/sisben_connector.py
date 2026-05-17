@@ -1,17 +1,16 @@
-
-import httpx
-import logging
 import asyncio
+import logging
 
 logger = logging.getLogger(__name__)
 
 async def consultar_async(cedula):
-    # Simulación de respuesta SISBEN basada en el mapeo
-    # En producción requiere reCAPTCHA v3 bypass
-    await asyncio.sleep(1)
+    cedula_str = str(cedula).strip() if cedula else ""
+    logger.info(f"Iniciando evaluación de SISBÉN - Cédula: {cedula_str} (Habeas Data Law 1581 Filter Active)")
+    await asyncio.sleep(0.5)
     return {
-        "status": "SUCCESS",
+        "status": "OMITIDO",
         "fuente": "SISBEN",
-        "grupo": "B4",
-        "mensaje": "Ciudadano focalizado en grupo B - Pobreza moderada."
+        "grupo": "N/A",
+        "mensaje": "Consulta de clasificación socioeconómica omitida por cumplimiento de Habeas Data (Ley 1581) para evitar perfilamientos de contrapartes comerciales.",
+        "metodo": "HABEAS_DATA_LAW_1581_FILTER"
     }

@@ -1,0 +1,303 @@
+"""
+RUNT SCRAPER - Consulta de vehículos en RUNT Colombia
+Autor: antigravity AI
+Fecha: Mayo 17, 2026
+"""
+
+import asyncio
+import json
+from datetime import datetime
+from typing import Dict, Optional
+from playwright.async_api import async_playwright, Browser, Page
+
+from .utils.cache_manager import CacheManager
+from .utils.stealth_mode import crear_navegador_stealth
+
+
+class RUNTScraper:
+    """Scraper para consulta de vehículos en RUNT Colombia"""
+
+    def __init__(self):
+        self.base_url = "https://www.runt.gov.co/consultaCiudadana/consultaVehiculo"
+        self.cache = CacheManager(ttl_horas=24)  # Cache 24h
+
+    async def consultar_vehiculo(self, placa: str, usar_cache: bool = True) -> Dict:
+        """
+        Consulta información de un vehículo por placa
+
+        Args:
+            placa: Placa del vehículo (ej: "ABC123" o "ABC-123")
+            usar_cache: Si True, usa cache si existe
+
+        Returns:
+            Dict con información del vehículo
+        """
+        # Normalizar placa
+        placa = placa.upper().replace("-", "")
+
+        # Verificar cache
+        if usar_cache:
+            cacheado = await self.cache.obtener("RUNT", placa)
+            if cacheado:
+                print(f"✅ CACHE HIT: RUNT - {placa}")
+                return cacheado
+
+        print(f"🔍 Consultando RUNT: {placa}")
+
+        try:
+            resultado = await self._scrapear_runt(placa)
+
+            # Guardar en cache
+            await self.cache.guardar("RUNT", placa, resultado)
+
+            return resultado
+
+        except Exception as e:
+            return {
+                "status": "ERROR",
+                "error": str(e),
+                "placa": placa,
+                "fuente": "RUNT",
+                "fecha_consulta": datetime.now().isoformat()
+            }
+
+    async def _scrapear_runt(self, placa: str) -> Dict:
+        """Ejecuta el scraping real de RUNT"""
+
+        async with async_playwright() as p:
+            # Crear navegador en modo stealth
+            browser, context = await crear_navegador_stealth()
+            page = await context.new_page()
+
+            try:
+                # Paso 1: Navegar a RUNT
+                print("  → Navegando a RUNT...")
+                await page.goto(
+                    self.base_url,
+                    wait_until='networkidle',
+                    timeout=30000
+                )
+                await asyncio.sleep(3)
+
+                # Paso 2: Capturar screenshot para debug
+                await page.screenshot(path=f"/tmp/runt_{placa}_1.png")
+
+                # Intentar múltiples selectores posibles
+                print("  → Buscando formulario...")
+
+                selectores_placa = [
+                    'input#mat-input-2',
+                    'input[name="numeroPlaca"]',
+                    'input[placeholder*="placa"]',
+                    'input[id*="placa"]',
+                    '#placa'
+                ]
+
+                input_placa = None
+                for sel in selectores_placa:
+                    try:
+                        input_placa = await page.query_selector(sel)
+                        if input_placa:
+                            print(f"  ✅ Encontrado input: {sel}")
+                            break
+                    except:
+                        continue
+
+                if not input_placa:
+                    # Si no encuentra el input, intentar analizar la página
+                    raise Exception("No se encontró campo de placa. La página puede haber cambiado.")
+
+                # Paso 4: Ingresar placa
+                print(f"  → Ingresando placa: {placa}")
+                await input_placa.fill(placa)
+                await asyncio.sleep(1)
+
+                # Capturar screenshot antes de submit
+                await page.screenshot(path=f"/tmp/runt_{placa}_2.png")
+
+                # Paso 5: Buscar y hacer click en botón consultar
+                selectores_boton = [
+                    'button:has-text("Consultar Información")',
+                    'button[type="submit"]',
+                    'button:has-text("Consultar")',
+                    'input[type="submit"]',
+                    'button.btn-primary'
+                ]
+
+                boton_consultar = None
+                for sel in selectores_boton:
+                    try:
+                        boton_consultar = await page.query_selector(sel)
+                        if boton_consultar:
+                            print(f"  ✅ Encontrado botón: {sel}")
+                            break
+                    except:
+                        continue
+
+                if not boton_consultar:
+                    raise Exception("No se encontró botón de consulta")
+
+                print("  → Click en consultar...")
+                await boton_consultar.click()
+
+                # Paso 6: Esperar resultados
+                print("  → Esperando resultados...")
+                await asyncio.sleep(5)
+
+                # Capturar screenshot de resultados
+                await page.screenshot(path=f"/tmp/runt_{placa}_3.png")
+
+                # Paso 7: Extraer información
+                print("  → Extrayendo información...")
+                resultado = await self._extraer_informacion(page, placa)
+
+                return {
+                    "status": "EXITOSO",
+                    "datos": resultado,
+                    "fuente": "RUNT",
+                    "fecha_consulta": datetime.now().isoformat(),
+                    "metodo": "PLAYWRIGHT_SCRAPING"
+                }
+
+            except Exception as e:
+                print(f"  ❌ Error: {e}")
+                # Guardar screenshot del error
+                await page.screenshot(path=f"/tmp/runt_{placa}_ERROR.png")
+                raise
+
+            finally:
+                await browser.close()
+
+    async def _extraer_informacion(self, page: Page, placa: str) -> Dict:
+        """Extrae información del DOM de la página de resultados"""
+
+        # Paso 1: Extraer HTML completo para análisis posterior
+        html_content = await page.content()
+
+        # Guardar HTML para debug
+        with open(f"/tmp/runt_{placa}.html", "w", encoding='utf-8') as f:
+            f.write(html_content)
+
+        # Paso 2: Intentar extraer datos usando selectores
+        info = {
+            "placa": placa,
+            "vehiculo": {},
+            "propietario": None,
+            "gravamenes": [],
+            "siniestros": [],
+            "estado": "DESCONOCIDO"
+        }
+
+        # Intentar múltiples estrategias de extracción
+        try:
+            # Estrategia 1: Buscar por labels
+            info["vehiculo"]["marca"] = await self._extraer_por_label(page, "Marca")
+            info["vehiculo"]["linea"] = await self._extraer_por_label(page, "Línea")
+            info["vehiculo"]["modelo"] = await self._extraer_por_label(page, "Modelo")
+            info["vehiculo"]["color"] = await self._extraer_por_label(page, "Color")
+            info["vehiculo"]["cilindraje"] = await self._extraer_por_label(page, "Cilindraje")
+
+            # Propietario
+            nombre_propietario = await self._extraer_por_label(page, "Propietario")
+            if nombre_propietario:
+                info["propietario"] = {"nombre": nombre_propietario}
+
+            # Estado
+            estado = await self._extraer_por_label(page, "Estado")
+            if estado:
+                info["estado"] = estado.upper()
+
+        except Exception as e:
+            print(f"    ⚠️ Error extrayendo por labels: {e}")
+
+        # Estrategia 2: Usar RegExp en el HTML
+        import re
+
+        # Buscar patrón de placa
+        patron_placa = re.search(r'[A-Z]{3}\d{3}|[A-Z]{3}-\d{3}', html_content)
+        if patron_placa:
+            info["placa_encontrada"] = patron_placa.group()
+
+        # Estrategia 3: Extraer todas las tablas
+        tablas = await page.query_selector_all('table')
+        print(f"    📊 Encontradas {len(tablas)} tablas")
+
+        for i, tabla in enumerate(tablas):
+            try:
+                filas = await tabla.query_selector_all('tr')
+                print(f"    Tabla {i}: {len(filas)} filas")
+
+                # Extraer texto de la tabla
+                for fila in filas:
+                    celdas = await fila.query_selector_all('td, th')
+                    if len(celdas) >= 2:
+                        etiqueta = await celdas[0].inner_text()
+                        valor = await celdas[1].inner_text()
+
+                        print(f"      {etiqueta}: {valor}")
+
+                        # Guardar si parece relevante
+                        if any(palabra in etiqueta.lower() for palabra in ['marca', 'modelo', 'color']):
+                            info["vehiculo"][etiqueta.lower()] = valor
+
+            except Exception as e:
+                print(f"    Error procesando tabla {i}: {e}")
+
+        return info
+
+    async def _extraer_por_label(self, page: Page, label: str) -> Optional[str]:
+        """Extrae valor buscando por un label adyacente"""
+
+        try:
+            # Buscar label
+            selectores_label = [
+                f'label:has-text("{label}")',
+                f'span:has-text("{label}")',
+                f'div:has-text("{label}")',
+                f'td:has-text("{label}")'
+            ]
+
+            for sel in selectores_label:
+                try:
+                    label_elem = await page.query_selector(sel)
+                    if label_elem:
+                        # Buscar siguiente hermano o elemento cercano
+                        parent = await label_elem.evaluate_handle('el => el.parentElement')
+
+                        # Obtener todos los hijos del parent
+                        hijos = await parent.query_selector_all('*')
+
+                        # Encontrar índice del label
+                        for i, hijo in enumerate(hijos):
+                            texto_hijo = await hijo.inner_text()
+                            if label in texto_hijo and i + 1 < len(hijos):
+                                # Retornar texto del siguiente hermano
+                                valor = await hijos[i + 1].inner_text()
+                                return valor.strip()
+
+                except:
+                    continue
+
+        except Exception as e:
+            print(f"      Error extrayendo {label}: {e}")
+
+        return None
+
+
+# Función principal para testing
+async def main():
+    """Función de prueba"""
+    scraper = RUNTScraper()
+
+    # Probar con una placa
+    placa_prueba = "ABC123"
+    resultado = await scraper.consultar_vehiculo(placa_prueba)
+
+    print("\n" + "="*60)
+    print("RESULTADO:")
+    print(json.dumps(resultado, indent=2, ensure_ascii=False))
+    print("="*60)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
