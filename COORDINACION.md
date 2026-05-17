@@ -18,7 +18,7 @@
 - Conectado a API: https://sarlaf.agentesia.cloud
 - Probado: Flujo login → dashboard funcionando
 
-**Progreso General:** 30% → 50% (2026-05-17 23:00)
+**Progreso General:** 30% → 60% (2026-05-17 23:30)
 
 ## RAMAS GIT
 
@@ -56,6 +56,17 @@
 - [x] Agregar endpoint DELETE /api/v1/historial/{id} (eliminar)
 - [x] Agregar endpoint GET /api/v1/historial/estadisticas/resumen
 - [x] Integrar con endpoint /api/v1/auditar para guardar automáticamente
+
+### Día 3 (Hoy - 2026-05-17) ✅ COMPLETADO
+- [x] Implementar sistema de notificaciones por email
+- [x] Crear servicio SMTP con soporte Gmail/SendGrid/AWS SES
+- [x] Crear templates HTML profesionales (2 templates)
+- [x] Integrar envío automático con endpoint /api/v1/auditar
+- [x] Implementar adjunto de PDF en emails
+- [x] Crear endpoint email de prueba
+- [x] Implementar reenvío de notificaciones
+- [x] Crear historial de notificaciones
+- [x] Documentar configuración SMTP en .env.example
 
 ### Semana 1 (Día 2-7)
 - [ ] Servicio de notificaciones por email
