@@ -1,4 +1,3 @@
-
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -9,17 +8,21 @@ class CDAEmpresa(Base):
     id = Column(Integer, primary_key=True, index=True)
     nit = Column(String, unique=True, index=True)
     razon_social = Column(String)
+    email = Column(String, unique=True, index=True)  # Agregado para auth
+    password_hash = Column(String)  # Agregado para auth
     representante_legal = Column(String)
     oficial_cumplimiento_id = Column(String)
     nivel_riesgo_aceptado = Column(String, default="BAJO")
-    
+    fecha_registro = Column(DateTime(timezone=True), server_default=func.now())
+    activo = Column(Boolean, default=True)
+
     contrapartes = relationship("ContraparteKYC", back_populates="cda")
 
 class ContraparteKYC(Base):
     __tablename__ = "contrapartes_kyc"
     id = Column(Integer, primary_key=True, index=True)
     cda_id = Column(Integer, ForeignKey("cda_empresas.id"))
-    tipo_persona = Column(String) # Natural / Juridica
+    tipo_persona = Column(String)
     documento = Column(String, index=True)
     nombre_completo = Column(String)
     actividad_economica = Column(String)
@@ -38,7 +41,7 @@ class EvidenciaLog(Base):
     fecha_consulta = Column(DateTime(timezone=True), server_default=func.now())
     orquestador_json_raw = Column(JSON)
     score_riesgo = Column(Integer)
-    decision_tomada = Column(String) # Aprobado / Rechazado / Escalado
+    decision_tomada = Column(String)
     usuario_auditor = Column(String)
 
     contraparte = relationship("ContraparteKYC", back_populates="evidencias")

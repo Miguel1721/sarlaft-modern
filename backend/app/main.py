@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .database import engine, Base
 from .routers import api_kyc, onboarding_router, admin_router
+# from .routers import contrapartes_router  # Temporarily disabled - needs get_current_user import
+from .auth import router as auth_router
 from .services.orchestrator_service import run_full_audit
 from apscheduler.schedulers.background import BackgroundScheduler
 from .services.sync_service import sync_listas_restrictivas
@@ -39,9 +41,11 @@ app.add_middleware(
 )
 
 # Include Routers
+app.include_router(auth_router.router, prefix="/api/v1")
 app.include_router(api_kyc.router)
 app.include_router(onboarding_router.router)
 app.include_router(admin_router.router)
+# app.include_router(contrapartes_router.router, prefix="/api/v1")  # Temporarily disabled
 
 class AuditoriaRequest(BaseModel):
     placa: Optional[str] = None
