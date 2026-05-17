@@ -53,3 +53,46 @@ class ListaRestrictivaCache(Base):
     documento = Column(String, index=True, nullable=True)
     lista_origen = Column(String, index=True)
     fecha_actualizacion = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+class HistorialConsulta(Base):
+    """Historial completo de todas las consultas SARLAFT realizadas"""
+    __tablename__ = "historial_consultas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    cda_id = Column(Integer, ForeignKey("cda_empresas.id"), index=True)
+
+    # Información de la contraparte consultada
+    tipo_documento = Column(String, index=True)  # CC, CE, NIT, PASAPORTE, etc.
+    numero_documento = Column(String, index=True)
+    nombre_contraparte = Column(String)
+
+    # Tipo de consulta
+    tipo_consulta = Column(String, index=True)  # SARLAFT_CDA, SARLAFT_COMPLETO, KYC_BASICO
+    cliente_id = Column(String)  # ID interno del cliente
+
+    # Resultados de la consulta
+    resultados_json = Column(JSON)  # Todos los resultados de los conectores
+    score_riesgo = Column(Integer, default=0)  # 0-100
+    nivel_riesgo = Column(String)  # BAJO, MEDIO, ALTO, CRITICO
+    decision = Column(String)  # APROBADO, RECHAZADO, REVISION_MANUAL
+
+    # Detalles de conectores
+    conectores_ejecutados = Column(JSON)  # Lista de conectores ejecutados
+    conectores_exitosos = Column(Integer, default=0)
+    conectores_fallidos = Column(Integer, default=0)
+
+    # Listas restrictivas
+    listas_restrictivas_encontradas = Column(JSON)  # Listas donde apareció
+    en_lista_restrictiva = Column(Boolean, default=False, index=True)
+
+    # Metadatos
+    fecha_consulta = Column(DateTime(timezone=True), server_default=func.now(), index=True)
+    ip_origen = Column(String)
+    user_agent = Column(String)
+    tiempo_ejecucion_segundos = Column(Integer)  # Tiempo que tomó la consulta
+
+    # Archivos generados
+    pdf_generado = Column(Boolean, default=False)
+    pdf_path = Column(String)
+
+    cda = relationship("CDAEmpresa")
